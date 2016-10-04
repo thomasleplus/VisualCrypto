@@ -1,10 +1,10 @@
 /* $Id: Key.java,v 1.2 2003/03/25 22:30:35 leplusth Exp $ */
 
-package ift6350.masklogin;
+package org.leplus.masklogin;
 
-import ift6350.libcrypto.MaskChallengeOracle;
-import ift6350.libcrypto.MaskChallenge;
-import ift6350.libcrypto.MaskKey;
+import org.leplus.libcrypto.MaskChallengeOracle;
+import org.leplus.libcrypto.MaskChallenge;
+import org.leplus.libcrypto.MaskKey;
 
 import java.io.InputStream;
 import java.io.IOException;
@@ -32,12 +32,12 @@ import javax.swing.border.TitledBorder;
 public final class Main {
 	
 	private static final String triangleString = "Triangle";
-	private static final String squareString   = "Carré";
+	private static final String squareString   = "Square";
 	private static final String pentagonString = "Pentagone";
 	private static final String hexagonString  = "Hexagone";
-	private static final String crossString    = "Croix";
-	private static final String starString     = "Étoile";
-	private static final String circleString   = "Cercle";
+	private static final String crossString    = "Cross";
+	private static final String starString     = "Star";
+	private static final String circleString   = "Circle";
 	
 	private static JFrame mainFrame;
 	private static JTextField loginField;
@@ -63,11 +63,11 @@ public final class Main {
 		
 		loginField = new JTextField(50);
 		
-		loginButton = new JButton("Continuer");
+		loginButton = new JButton("Continue");
 		loginButton.addActionListener(new showMask());
 		
         JPanel idPanel = new JPanel();
-		TitledBorder idBorder = new TitledBorder(" Entrez votre identifiant : ");
+		TitledBorder idBorder = new TitledBorder("Login: ");
 		idPanel.setBorder(idBorder);
 		idPanel.add(loginField);
 		idPanel.add(loginButton);
@@ -96,14 +96,14 @@ public final class Main {
         group.add(starButton);
         group.add(circleButton);
 		
-		okButton = new JButton("Valider");
+		okButton = new JButton("Validate");
 		okButton.addActionListener(new validateMask());
 		
-		cancelButton = new JButton("Annuler");
+		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new cancelMask());
 		
         JPanel radioPanel = new JPanel();
-		TitledBorder radioBorder = new TitledBorder(" Sélectionnez la figure manquante : ");
+		TitledBorder radioBorder = new TitledBorder("Select missing shape:");
 		radioPanel.setBorder(radioBorder);
         radioPanel.add(triangleButton);
         radioPanel.add(squareButton);
@@ -209,8 +209,8 @@ public final class Main {
 			else {
 				loginField.setText("");
 				JOptionPane.showMessageDialog(mainFrame,
-											  "Identifiant inconnu.",
-											  "Erreur",
+											  "Unknown login.",
+											  "Error",
 											  JOptionPane.ERROR_MESSAGE);
 			}
 			mainFrame.repaint();
@@ -231,12 +231,12 @@ public final class Main {
 				|| circleButton.isSelected()) {
 				if (checkMask())
 					JOptionPane.showMessageDialog(mainFrame,
-												  "Challenge réussi.",
+												  "Challenge sucessful.",
 												  "Message",
 												  JOptionPane.INFORMATION_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(mainFrame,
-												  "Challenge échoué.",
+												  "Challenge failed.",
 												  "Message",
 												  JOptionPane.INFORMATION_MESSAGE);
 				challenge = null;

@@ -1,6 +1,6 @@
 /* $Id: Key.java,v 1.2 2003/03/25 22:30:35 leplusth Exp $ */
 
-package ift6350.libcrypto;
+package org.leplus.libcrypto;
 
 import java.io.InputStream;
 import java.io.OutputStream;
