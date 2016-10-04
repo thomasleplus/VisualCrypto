@@ -1,12 +1,12 @@
 /* $Id: Key.java,v 1.2 2003/03/25 22:30:35 leplusth Exp $ */
 
-package ift6350.libimage;
+package org.leplus.libimage;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;
 
-import ift6350.lib2D.Polygon2D;
+import org.leplus.lib2D.Polygon2D;
 
 /**
  * Portable Bitmap.

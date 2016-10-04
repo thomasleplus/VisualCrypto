@@ -1,11 +1,11 @@
 /* $Id: Key.java,v 1.2 2003/03/25 22:30:35 leplusth Exp $ */
 
-package ift6350.keygen;
+package org.leplus.keygen;
 
-import ift6350.libimage.PortableBitmap;
+import org.leplus.libimage.PortableBitmap;
 
-import ift6350.libcrypto.Mask;
-import ift6350.libcrypto.MaskKeyGenerator;
+import org.leplus.libcrypto.Mask;
+import org.leplus.libcrypto.MaskKeyGenerator;
 
 import java.io.IOException;
 import java.io.FileOutputStream;

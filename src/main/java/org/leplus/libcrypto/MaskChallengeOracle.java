@@ -1,11 +1,11 @@
 /* $Id: Key.java,v 1.2 2003/03/25 22:30:35 leplusth Exp $ */
 
-package ift6350.libcrypto;
+package org.leplus.libcrypto;
 
-import ift6350.lib2D.Point2D;
-import ift6350.lib2D.Matrix2D;
-import ift6350.lib2D.Polygon2D;
-import ift6350.libimage.PortableBitmap;
+import org.leplus.lib2D.Point2D;
+import org.leplus.lib2D.Matrix2D;
+import org.leplus.lib2D.Polygon2D;
+import org.leplus.libimage.PortableBitmap;
 
 import java.util.Hashtable;
 import java.util.Random;

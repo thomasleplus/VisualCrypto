@@ -1,6 +1,6 @@
 /* $Id: Key.java,v 1.2 2003/03/25 22:30:35 leplusth Exp $ */
 
-package ift6350.lib2D;
+package org.leplus.lib2D;
 
 /**
  * Vecteur.
