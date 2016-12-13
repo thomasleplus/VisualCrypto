@@ -19,7 +19,12 @@ sudo: false
 install: true
 
 jdk:
+  - oraclejdk6
+  - openjdk6
+  - oraclejdk7
+  - openjdk7
   - oraclejdk8
+  - openjdk8
 
 cache:
   directories:
