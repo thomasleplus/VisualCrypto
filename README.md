@@ -16,4 +16,6 @@ For more information on this project, as well as the original paper in PDF, plea
 
 http://www.leplus.org/projects/visual/
 
+[Travis CI](https://travis-ci.org/thomasleplus/VisualCrypto)
 
+<img src="https://api.travis-ci.org/thomasleplus/VisualCrypto.png"></a>
