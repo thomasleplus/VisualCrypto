@@ -14,8 +14,8 @@ Stinson on his page dedicated to the visual cryptography: http://cacr.uwaterloo.
 
 For more information on this project, as well as the original paper in PDF, please see (in French):
 
-http://www.leplus.org/projects/visual/
+https://www.leplus.org/projects/visual/
 
 [Travis CI](https://travis-ci.org/thomasleplus/VisualCrypto)
 
-<img src="https://api.travis-ci.org/thomasleplus/VisualCrypto.png"></a>
+<a href="https://travis-ci.org/thomasleplus/VisualCrypto"><img src="https://api.travis-ci.org/thomasleplus/VisualCrypto.png"></a>
