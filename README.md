@@ -1,7 +1,7 @@
 # VisualCrypto
 
 As part of my exchange with the University of Montreal, I
-implantated a visual cryptographic system (supervised by Pierre
+implemented a visual cryptographic system (supervised by Pierre
 Poulin). The project is an identification system using transparent cards
 that must be placed on the screen to reveal a secret drawing. It
 includes two applications: a key generator (transparent cards to
