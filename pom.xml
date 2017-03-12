@@ -1,6 +1,6 @@
 <!--
 VisualCrypto - A project of visual cryptography.
-Copyright (C) 2016 Thomas Leplus
+Copyright (C) 2002 Thomas Leplus
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -79,6 +79,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
 	</configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>org.leplus.masklogin.Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
       </plugin>
     </plugins>
   </build>
