@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <groupId>org.leplus</groupId>
   <artifactId>visualcrypto</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <name>visualcrypto</name>
+  <name>Visual Crypto</name>
   <packaging>jar</packaging>
   <description>A project of visual cryptography.</description>
   <url>https://github.com/thomasleplus/VisualCrypto</url>
@@ -34,14 +34,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <scm>
     <url>https://github.com/thomasleplus/VisualCrypto</url>
     <connection>scm:git:https://github.com/thomasleplus/VisualCrypto.git</connection>
-    <developerConnection>scm:git:https://github.com/thomasleplus/VisualCrypto.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:thomasleplus/VisualCrypto.git</developerConnection>
   </scm>
+  <organization>
+    <name>Leplus.org</name>
+    <url>https://www.leplus.org</url>
+  </organization>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/thomasleplus/VisualCrypto/issues</url>
+  </issueManagement>
   <developers>
     <developer>
-      <email>thomas.leplus@gmail.com</email>
+      <email>thomas@leplus.org</email>
       <name>Thomas Leplus</name>
       <url>https://www.leplus.org</url>
       <id>thomasleplus</id>
+      <roles>
+        <role>Project Lead</role>
+      </roles>
     </developer>
   </developers>
   <properties>
