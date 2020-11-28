@@ -1,5 +1,8 @@
 # VisualCrypto
 
+![Maven](https://github.com/thomasleplus/VisualCrypto/workflows/Maven/badge.svg)
+![CodeQL](https://github.com/thomasleplus/VisualCrypto/workflows/CodeQL/badge.svg)
+
 As part of my exchange with the University of Montreal, I
 implemented a visual cryptographic system (supervised by Pierre
 Poulin). The project is an identification system using transparent cards
