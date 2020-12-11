@@ -18,9 +18,9 @@
 
 package org.leplus.libimage;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
 
 import org.leplus.lib2D.Polygon2D;
 
@@ -28,55 +28,25 @@ import org.leplus.lib2D.Polygon2D;
  * Portable Bitmap.
  *
  * @version $Revision: 1.2 $
- * @author  Thomas Leplus <thomas@leplus.org>
+ * @author Thomas Leplus <thomas@leplus.org>
  */
-public class PortableBitmap
-	implements Cloneable {
-	
+public class PortableBitmap implements Cloneable {
+
 	/**
-	 * Les données du bitmap.
+	 * Les donnï¿½es du bitmap.
 	 */
 	public byte[][] table;
-	
+
 	/**
 	 * La largeur du bitmap.
 	 */
 	public int width;
-	
+
 	/**
 	 * La hauteur du bitmap.
 	 */
 	public int height;
-	
-	/**
-	 * Construit le bitmap à partir du tableau et des dimensions donnée.
-	 *
-	 * @param t le tableau d'au moins h lignes et ceil(w/8) colonnes.
-	 * @param w la largeur.
-	 * @param h la hauteur.
-	 */
-	public PortableBitmap(byte[][] t, int w, int h) {
-		if (w < 1 || h < 1 || h > t.length)
-			throw new IndexOutOfBoundsException();
-		int l = (int)StrictMath.ceil((double)w / 8);
-		for (int i = 0; i < h; i++)
-			if (t[i].length < l)
-				throw new IndexOutOfBoundsException();
-		height = h;
-		width = w;
-		table = t;
-	}
-	
-	/**
-	 * Construit le bitmap vide à partir du tableau et des dimensions donnée.
-	 *
-	 * @param w la largeur.
-	 * @param h la hauteur.
-	 */
-	public PortableBitmap(int w, int h) {
-		this(new byte[h][(int)StrictMath.ceil((double)w / 8)], w, h);
-	}
-	
+
 	/**
 	 * Construit le bitmap vide.
 	 */
@@ -85,143 +55,115 @@ public class PortableBitmap
 		width = 0;
 		table = null;
 	}
-	
+
 	/**
-	 * Construit le bitmap à partir des données dans le fot.
+	 * Construit le bitmap ï¿½ partir du tableau et des dimensions donnï¿½e.
 	 *
-	 * @param input le flot d'entrée.
+	 * @param t le tableau d'au moins h lignes et ceil(w/8) colonnes.
+	 * @param w la largeur.
+	 * @param h la hauteur.
+	 */
+	public PortableBitmap(final byte[][] t, final int w, final int h) {
+		if (w < 1 || h < 1 || h > t.length) {
+			throw new IndexOutOfBoundsException();
+		}
+		final int l = (int) StrictMath.ceil((double) w / 8);
+		for (int i = 0; i < h; i++) {
+			if (t[i].length < l) {
+				throw new IndexOutOfBoundsException();
+			}
+		}
+		height = h;
+		width = w;
+		table = t;
+	}
+
+	/**
+	 * Construit le bitmap ï¿½ partir des donnï¿½es dans le fot.
+	 *
+	 * @param input le flot d'entrï¿½e.
 	 * @throws IOException si une erreure se produit dans le flot.
 	 */
-	public PortableBitmap(InputStream input)
-		throws IOException {
+	public PortableBitmap(final InputStream input) throws IOException {
 		read(input);
 	}
-	
+
 	/**
-	 * Retourne la valeur du bitmap pour la coordonnée donnée.
+	 * Construit le bitmap vide ï¿½ partir du tableau et des dimensions donnï¿½e.
 	 *
-	 * @param u la colonne.
-	 * @param v la ligne.
-	 * @return le bit
+	 * @param w la largeur.
+	 * @param h la hauteur.
 	 */
-	public boolean getValue(int u, int v) {
-		if (u < 0 || u >= width || v < 0 || v >= height)
-			throw new IndexOutOfBoundsException();
-		return (table[v][u >>> 3] & (128 >>> (u & 7))) != 0;
+	public PortableBitmap(final int w, final int h) {
+		this(new byte[h][(int) StrictMath.ceil((double) w / 8)], w, h);
 	}
-	
-	/**
-	 * Change la valeur du bitmap pour la coordonnée donnée.
-	 *
-	 * @param u la colonne.
-	 * @param v la ligne.
-	 * @param b la valeur.
-	 */
-	public void setValue(boolean b, int u, int v) {
-		if (u < 0 || u >= width || v < 0 || v >= height)
-			throw new IndexOutOfBoundsException();
-		if (b) table[v][u >>> 3] |= 128 >>> (u & 7);
-		else   table[v][u >>> 3] &= 127 >>> (u & 7);
+
+	@Override
+	public Object clone() {
+		final int w = (int) StrictMath.ceil((double) width / 8);
+		final byte[][] t = new byte[height][w];
+		for (int i = 0; i < table.length; i++) {
+			System.arraycopy(table[i], 0, t[i], 0, t[i].length);
+		}
+		return new PortableBitmap(t, width, height);
 	}
-	
+
 	/**
-	 * Lit la clé dans le flot.
+	 * Dessine le polygï¿½ne sur le bitmap.
 	 *
-	 * @param input le flot d'entrée.
-	 * @throws IOException si une erreure se produit dans le flot.
+	 * @param b  la couleur.
+	 * @param pg le polygï¿½ne.
 	 */
-	public void read(InputStream input)
-		throws IOException {
-		if (!readLine(input).equals("P4"))
-			throw new IOException("Invalid format");
-		width = Integer.parseInt(readLine(input));
-		height = Integer.parseInt(readLine(input));
-		int w = (int)StrictMath.ceil((double)width / 8);
-		table = new byte[height][w];
-		int m = 0xFF << (width & 0x07);
-		for (int i = 0; i < height; i++) {
-			readBytes(input, table[i]);
-			table[i][w - 1] &= m;
+	public void draw(final boolean b, final Polygon2D pg) {
+		int x1, y1, x2, y2;
+		x1 = (int) StrictMath.rint(pg.getTop(pg.getNumTops() - 1).getX());
+		y1 = (int) StrictMath.rint(pg.getTop(pg.getNumTops() - 1).getY());
+		for (int i = 0; i < pg.getNumTops(); i++) {
+			x2 = (int) StrictMath.rint(pg.getTop(i).getX());
+			y2 = (int) StrictMath.rint(pg.getTop(i).getY());
+			drawLine(b, x1, y1, x2, y2);
+			x1 = x2;
+			y1 = y2;
 		}
 	}
-	
+
 	/**
-	 * Lit un octet dans le flot.
+	 * Dessine le polygï¿½ne plein sur le bitmap.
 	 *
-	 * @param input le flot d'entrée.
-	 * @throws IOException si une erreure se produit dans le flot.
+	 * @param b  la couleur.
+	 * @param pg le polygï¿½ne.
 	 */
-	private byte readByte(InputStream input)
-		throws IOException {
-		int b = input.read();
-		if (b < 0)
-			throw new IOException("Unexpected EOF");
-		return (byte)b;
+	public void drawFilled(final boolean b, final Polygon2D pg) {
+		draw(b, pg);
+		floodFill(b, (int) StrictMath.rint(pg.getCenter().getX()), (int) StrictMath.rint(pg.getCenter().getY()));
 	}
-	
-	/**
-	 * Lit des octets dans le flot.
-	 *
-	 * @param input le flot d'entrée.
-	 * @param bytes le tableau d'octets à remplir.
-	 * @throws IOException si une erreure se produit dans le flot.
-	 */
-	private void readBytes(InputStream input, byte[] bytes)
-		throws IOException {
-		int m;
-		for (int n = 0; n < bytes.length; n += m) {
-			m = input.read(bytes, n, bytes.length - n);
-			if (m < 0)
-				throw new IOException("Unexpected EOF");
-		}
-	}
-	
-	/**
-	 * Lit une ligne de caractères dans le flot.
-	 *
-	 * @param input le flot d'entrée.
-	 * @throws IOException si une erreure se produit dans le flot.
-	 */
-	private String readLine(InputStream input)
-		throws IOException {
-		char c;
-		String s = "";
-		while ((c = (char)readByte(input)) != '\n') s += c;
-		return s;
-	}
-	
-	/**
-	 * Écrit le bitmap dans le flot.
-	 *
-	 * @param output le flot de sortie.
-	 * @throws IOException si une erreure se produit dans le flot.
-	 */
-	public void write(OutputStream output)
-		throws IOException {
-		String header = "P4\n" + width + "\n" + height + "\n";
-		output.write(header.getBytes("US-ASCII"));
-		for (int i = 0; i < height; i++)
-			output.write(table[i]);
-	}
-	
+
 	/**
 	 * Trace une ligne.
 	 *
-	 * @param b la couleur
+	 * @param b  la couleur
 	 * @param x1 la colonne du point 1
 	 * @param y1 la ligne du point 1
 	 * @param x2 la colonne du point 2
 	 * @param y2 la ligne du point 2
 	 */
-	public void drawLine(boolean b, int x1, int y1, int x2, int y2) {
+	public void drawLine(final boolean b, int x1, int y1, final int x2, final int y2) {
 		int dx = StrictMath.abs(x2 - x1);
 		int dy = StrictMath.abs(y2 - y1);
 		int ix, iy;
-		if (x1 > x2) ix = -1; else ix = 1;
-		if (y1 > y2) iy = -1; else iy = 1;
-		if (dx >= dy) {           
-			int dpr = dy << 1;
-			int dpru = dpr - (dx << 1);
+		if (x1 > x2) {
+			ix = -1;
+		} else {
+			ix = 1;
+		}
+		if (y1 > y2) {
+			iy = -1;
+		} else {
+			iy = 1;
+		}
+		if (dx >= dy) {
+			final int dpr = dy << 1;
+			final int dpru = dpr - (dx << 1);
 			int p = dpr - dx;
 			for (; dx >= 0; dx--) {
 				setValue(b, x1, y1);
@@ -235,8 +177,8 @@ public class PortableBitmap
 				}
 			}
 		} else {
-			int dpr = dx << 1;
-			int dpru = dpr - (dy << 1);
+			final int dpr = dx << 1;
+			final int dpru = dpr - (dy << 1);
 			int p = dpr - dy;
 			for (; dy >= 0; dy--) {
 				setValue(b, x1, y1);
@@ -251,7 +193,26 @@ public class PortableBitmap
 			}
 		}
 	}
-	
+
+	@Override
+	public boolean equals(final Object object) {
+		final PortableBitmap m = (PortableBitmap) object;
+		if (table.length != m.table.length) {
+			return false;
+		}
+		for (int i = 0; i < table.length; i++) {
+			if (table[i].length != m.table[i].length) {
+				return false;
+			}
+			for (int j = 0; j < table[i].length; j++) {
+				if (table[i][j] != m.table[i][j]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * Trace une ligne.
 	 *
@@ -259,75 +220,148 @@ public class PortableBitmap
 	 * @param x la colonne du germe
 	 * @param y la ligne du germe
 	 */
-	public void floodFill(boolean b, int x, int y) {
-		if (getValue(x, y) == b) return;
+	public void floodFill(final boolean b, final int x, final int y) {
+		if (getValue(x, y) == b) {
+			return;
+		}
 		setValue(b, x, y);
-		if (x + 1 < width) floodFill(b, x + 1, y);
-		if (x - 1 >= 0) floodFill(b, x - 1, y);
-		if (y + 1 < height) floodFill(b, x, y + 1);
-		if (y - 1 >= 0) floodFill(b, x, y - 1);
-	}
-	
-	/**
-	 * Dessine le polygône sur le bitmap.
-	 *
-	 * @param b la couleur.
-	 * @param pg le polygône.
-	 */
-	public void draw(boolean b, Polygon2D pg) {
-		int x1, y1, x2, y2;
-		x1 = (int)StrictMath.rint(pg.getTop(pg.getNumTops() - 1).getX());
-		y1 = (int)StrictMath.rint(pg.getTop(pg.getNumTops() - 1).getY());
-		for (int i = 0; i < pg.getNumTops(); i++) {
-			x2 = (int)StrictMath.rint(pg.getTop(i).getX());
-			y2 = (int)StrictMath.rint(pg.getTop(i).getY());
-			drawLine(b, x1, y1, x2, y2);
-			x1 = x2;
-			y1 = y2;
+		if (x + 1 < width) {
+			floodFill(b, x + 1, y);
+		}
+		if (x - 1 >= 0) {
+			floodFill(b, x - 1, y);
+		}
+		if (y + 1 < height) {
+			floodFill(b, x, y + 1);
+		}
+		if (y - 1 >= 0) {
+			floodFill(b, x, y - 1);
 		}
 	}
-	
+
 	/**
-	 * Dessine le polygône plein sur le bitmap.
+	 * Retourne la valeur du bitmap pour la coordonnï¿½e donnï¿½e.
 	 *
-	 * @param b la couleur.
-	 * @param pg le polygône.
+	 * @param u la colonne.
+	 * @param v la ligne.
+	 * @return le bit
 	 */
-	public void drawFilled(boolean b, Polygon2D pg) {
-		draw(b, pg);
-		floodFill(b, (int)StrictMath.rint(pg.getCenter().getX()), (int)StrictMath.rint(pg.getCenter().getY()));
+	public boolean getValue(final int u, final int v) {
+		if (u < 0 || u >= width || v < 0 || v >= height) {
+			throw new IndexOutOfBoundsException();
+		}
+		return (table[v][u >>> 3] & 128 >>> (u & 7)) != 0;
 	}
-	
+
+	/**
+	 * Lit la clï¿½ dans le flot.
+	 *
+	 * @param input le flot d'entrï¿½e.
+	 * @throws IOException si une erreure se produit dans le flot.
+	 */
+	public void read(final InputStream input) throws IOException {
+		if (!readLine(input).equals("P4")) {
+			throw new IOException("Invalid format");
+		}
+		width = Integer.parseInt(readLine(input));
+		height = Integer.parseInt(readLine(input));
+		final int w = (int) StrictMath.ceil((double) width / 8);
+		table = new byte[height][w];
+		final int m = 0xFF << (width & 0x07);
+		for (int i = 0; i < height; i++) {
+			readBytes(input, table[i]);
+			table[i][w - 1] &= m;
+		}
+	}
+
+	/**
+	 * Lit un octet dans le flot.
+	 *
+	 * @param input le flot d'entrï¿½e.
+	 * @throws IOException si une erreure se produit dans le flot.
+	 */
+	private byte readByte(final InputStream input) throws IOException {
+		final int b = input.read();
+		if (b < 0) {
+			throw new IOException("Unexpected EOF");
+		}
+		return (byte) b;
+	}
+
+	/**
+	 * Lit des octets dans le flot.
+	 *
+	 * @param input le flot d'entrï¿½e.
+	 * @param bytes le tableau d'octets ï¿½ remplir.
+	 * @throws IOException si une erreure se produit dans le flot.
+	 */
+	private void readBytes(final InputStream input, final byte[] bytes) throws IOException {
+		int m;
+		for (int n = 0; n < bytes.length; n += m) {
+			m = input.read(bytes, n, bytes.length - n);
+			if (m < 0) {
+				throw new IOException("Unexpected EOF");
+			}
+		}
+	}
+
+	/**
+	 * Lit une ligne de caractï¿½res dans le flot.
+	 *
+	 * @param input le flot d'entrï¿½e.
+	 * @throws IOException si une erreure se produit dans le flot.
+	 */
+	private String readLine(final InputStream input) throws IOException {
+		char c;
+		String s = "";
+		while ((c = (char) readByte(input)) != '\n') {
+			s += c;
+		}
+		return s;
+	}
+
+	/**
+	 * Change la valeur du bitmap pour la coordonnï¿½e donnï¿½e.
+	 *
+	 * @param u la colonne.
+	 * @param v la ligne.
+	 * @param b la valeur.
+	 */
+	public void setValue(final boolean b, final int u, final int v) {
+		if (u < 0 || u >= width || v < 0 || v >= height) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (b) {
+			table[v][u >>> 3] |= 128 >>> (u & 7);
+		} else {
+			table[v][u >>> 3] &= 127 >>> (u & 7);
+		}
+	}
+
+	@Override
 	public String toString() {
 		String s = width + " " + height + "\n";
 		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++)
+			for (int j = 0; j < width; j++) {
 				s += getValue(j, i) ? "1" : "0";
+			}
 			s += "\n";
 		}
 		return s;
 	}
-	
-	public Object clone() {
-		int w = (int)StrictMath.ceil((double)width / 8);
-		byte[][] t = new byte[height][w];
-		for (int i = 0; i < table.length; i++)
-			System.arraycopy(table[i], 0, t[i], 0, t[i].length);
-		return new PortableBitmap(t, width, height);
-	}
-	
-	public boolean equals(Object object) {
-		PortableBitmap m = (PortableBitmap)object;
-		if (table.length != m.table.length)
-			return false;
-		for (int i = 0; i < table.length; i++) {
-			if (table[i].length != m.table[i].length)
-				return false;
-			for (int j = 0; j < table[i].length; j++)
-				if (table[i][j] != m.table[i][j])
-					return false;
+
+	/**
+	 * ï¿½crit le bitmap dans le flot.
+	 *
+	 * @param output le flot de sortie.
+	 * @throws IOException si une erreure se produit dans le flot.
+	 */
+	public void write(final OutputStream output) throws IOException {
+		final String header = "P4\n" + width + "\n" + height + "\n";
+		output.write(header.getBytes("US-ASCII"));
+		for (int i = 0; i < height; i++) {
+			output.write(table[i]);
 		}
-		return true;
 	}
-	
+
 }
