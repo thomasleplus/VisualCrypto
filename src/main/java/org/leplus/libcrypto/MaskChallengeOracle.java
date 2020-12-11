@@ -18,63 +18,63 @@
 
 package org.leplus.libcrypto;
 
-import org.leplus.lib2D.Point2D;
-import org.leplus.lib2D.Matrix2D;
-import org.leplus.lib2D.Polygon2D;
-import org.leplus.libimage.PortableBitmap;
-
 import java.util.Hashtable;
 import java.util.Random;
+
+import org.leplus.lib2D.Matrix2D;
+import org.leplus.lib2D.Point2D;
+import org.leplus.lib2D.Polygon2D;
+import org.leplus.libimage.PortableBitmap;
 
 /**
  * Oracle de Challenge d'Identification par Masque.
  *
  * @version $Revision: 1.2 $
- * @author  Thomas Leplus <thomas@leplus.org>
+ * @author Thomas Leplus <thomas@leplus.org>
  */
 public final class MaskChallengeOracle {
-	
-	public static final int TRIANGLE =  1;
-	public static final int SQUARE   =  2;
-	public static final int PENTAGON =  4;
-	public static final int HEXAGON  =  8;
-	public static final int STAR     = 16;
-	public static final int CROSS    = 32;
-	public static final int CIRCLE   = 64;
-	
+
+	public static final int TRIANGLE = 1;
+	public static final int SQUARE = 2;
+	public static final int PENTAGON = 4;
+	public static final int HEXAGON = 8;
+	public static final int STAR = 16;
+	public static final int CROSS = 32;
+	public static final int CIRCLE = 64;
+
 	/**
-	 * Les réponses des challenges générés.
+	 * Les rï¿½ponses des challenges gï¿½nï¿½rï¿½s.
 	 */
 	private static final Hashtable responses = new Hashtable();
-	
+
 	/**
-	 * La source d'aléat.
+	 * La source d'alï¿½at.
 	 */
-	private Random random;
-	
+	private final Random random;
+
 	/**
 	 * Construit l'oracle.
 	 */
 	public MaskChallengeOracle() {
 		random = new Random();
 	}
-	
+
 	/**
-	 * Génère un challenge pour la clé donnée.
+	 * Gï¿½nï¿½re un challenge pour la clï¿½ donnï¿½e.
 	 *
-	 * @param key la clé.
+	 * @param key la clï¿½.
 	 * @return le challenge.
 	 */
-	public MaskChallenge generateChallenge(MaskKey key) {
-		double w = key.getWidth();
-		double h = key.getHeight();
-		PortableBitmap pbm = new PortableBitmap((int)w, (int)h);
-		Matrix2D m = Matrix2D.scaling(StrictMath.min(w / 3.3, h / 2.2));
-		int[] figs = { TRIANGLE, SQUARE, PENTAGON, HEXAGON, STAR, CROSS, CIRCLE };
+	public MaskChallenge generateChallenge(final MaskKey key) {
+		final double w = key.getWidth();
+		final double h = key.getHeight();
+		final PortableBitmap pbm = new PortableBitmap((int) w, (int) h);
+		final Matrix2D m = Matrix2D.scaling(StrictMath.min(w / 3.3, h / 2.2));
+		final int[] figs = { TRIANGLE, SQUARE, PENTAGON, HEXAGON, STAR, CROSS, CIRCLE };
 		shuffle(figs);
 		for (int i = 0; i < 6; i++) {
 			Polygon2D p = null;
-			switch(figs[i]) {
+			switch (figs[i]) {
 			case TRIANGLE:
 				p = makePolygon(3);
 				break;
@@ -94,75 +94,76 @@ public final class MaskChallengeOracle {
 				p = makeCross();
 				break;
 			case CIRCLE:
-				p = makePolygon((int)(StrictMath.min(w / 3, h / 2)));
+				p = makePolygon((int) StrictMath.min(w / 3, h / 2));
 				break;
 			}
 			p.transform(m.rotate(random.nextDouble()).translate(w / 3 * (i % 3) + w / 6, h / 2 * (i / 3) + h / 4));
 			pbm.drawFilled(true, p);
 		}
 		Mask mask = new Mask(pbm);
-		if (random.nextBoolean())
+		if (random.nextBoolean()) {
 			mask = mask.not();
- 		MaskChallenge mc = new MaskChallenge(mask.xor(key));
+		}
+		final MaskChallenge mc = new MaskChallenge(mask.xor(key));
 		responses.put(mc, new Integer(figs[6]));
 		return mc;
 	}
-	
-	private void shuffle(int[] t) {
+
+	private Polygon2D makeCross() {
+		final Point2D[] points = new Point2D[13];
+		points[0] = new Point2D(0, 0);
+		points[1] = new Point2D(0.125, 0.484);
+		points[2] = new Point2D(0.125, 0.125);
+		points[3] = new Point2D(0.484, 0.125);
+		points[4] = new Point2D(0.484, -0.125);
+		points[5] = new Point2D(0.125, -0.125);
+		points[6] = new Point2D(0.125, -0.484);
+		points[7] = new Point2D(-0.125, -0.484);
+		points[8] = new Point2D(-0.125, -0.125);
+		points[9] = new Point2D(-0.484, -0.125);
+		points[10] = new Point2D(-0.484, 0.125);
+		points[11] = new Point2D(-0.125, 0.125);
+		points[12] = new Point2D(-0.125, 0.484);
+		return new Polygon2D(points);
+	}
+
+	private Polygon2D makePolygon(final int faces) {
+		return new Polygon2D(faces).transform(Matrix2D.scaling(0.5));
+	}
+
+	private Polygon2D makeStar() {
+		final Point2D[] points = new Point2D[9];
+		points[0] = new Point2D(0, 0);
+		points[1] = new Point2D(0, 0.5);
+		points[2] = new Point2D(0.125, 0.125);
+		points[3] = new Point2D(0.5, 0);
+		points[4] = new Point2D(0.125, -0.125);
+		points[5] = new Point2D(0, -0.5);
+		points[6] = new Point2D(-0.125, -0.125);
+		points[7] = new Point2D(-0.5, 0);
+		points[8] = new Point2D(-0.125, 0.125);
+		return new Polygon2D(points);
+	}
+
+	private void shuffle(final int[] t) {
 		for (int i = 0; i < t.length - 1; i++) {
-			int j = (StrictMath.abs(random.nextInt()) % (t.length - i - 1)) + i + 1;
-			int k = t[i];
+			final int j = StrictMath.abs(random.nextInt()) % (t.length - i - 1) + i + 1;
+			final int k = t[i];
 			t[i] = t[j];
 			t[j] = k;
 		}
 	}
-	
-	private Polygon2D makeStar() {
-		Point2D[] points = new Point2D[9];
-		points[0] = new Point2D( 0    ,  0    );
-		points[1] = new Point2D( 0    ,  0.5  );
-		points[2] = new Point2D( 0.125,  0.125);
-		points[3] = new Point2D( 0.5  ,  0    );
-		points[4] = new Point2D( 0.125, -0.125);
-		points[5] = new Point2D( 0    , -0.5  );
-		points[6] = new Point2D(-0.125, -0.125);
-		points[7] = new Point2D(-0.5  ,  0    );
-		points[8] = new Point2D(-0.125,  0.125);
-		return new Polygon2D(points);
-	}
-	
-	private Polygon2D makeCross() {
-		Point2D[] points = new Point2D[13];
-		points[ 0] = new Point2D( 0    ,  0    );
-		points[ 1] = new Point2D( 0.125,  0.484);
-		points[ 2] = new Point2D( 0.125,  0.125);
-		points[ 3] = new Point2D( 0.484,  0.125);
-		points[ 4] = new Point2D( 0.484, -0.125);
-		points[ 5] = new Point2D( 0.125, -0.125);
-		points[ 6] = new Point2D( 0.125, -0.484);
-		points[ 7] = new Point2D(-0.125, -0.484);
-		points[ 8] = new Point2D(-0.125, -0.125);
-		points[ 9] = new Point2D(-0.484, -0.125);
-		points[10] = new Point2D(-0.484,  0.125);
-		points[11] = new Point2D(-0.125,  0.125);
-		points[12] = new Point2D(-0.125,  0.484);
-		return new Polygon2D(points);
-	}
-	
-	private Polygon2D makePolygon(int faces) {
-		return (new Polygon2D(faces)).transform(Matrix2D.scaling(0.5));
-	}
-	
+
 	/**
-	 * Génère un challenge pour la clé donnée.
+	 * Gï¿½nï¿½re un challenge pour la clï¿½ donnï¿½e.
 	 *
 	 * @param challenge le challenge.
-	 * @param response la réponse.
-	 * @return true si la réponse est correcte, false sinon.
+	 * @param response  la rï¿½ponse.
+	 * @return true si la rï¿½ponse est correcte, false sinon.
 	 */
-	public boolean verifyChallenge(MaskChallenge challenge, int response) {
-		Integer i = (Integer)responses.get(challenge);
+	public boolean verifyChallenge(final MaskChallenge challenge, final int response) {
+		final Integer i = (Integer) responses.get(challenge);
 		return i.intValue() == response;
 	}
-	
+
 }

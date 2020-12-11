@@ -18,36 +18,34 @@
 
 package org.leplus.libcrypto;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * Clé de Masque Cryptographique.
+ * Clï¿½ de Masque Cryptographique.
  *
  * @version $Revision: 1.2 $
- * @author  Thomas Leplus <thomas@leplus.org>
+ * @author Thomas Leplus <thomas@leplus.org>
  */
-public final class MaskKey
-	extends Mask {
-	
+public final class MaskKey extends Mask {
+
 	/**
-	 * Construit la clé à partir du masque.
+	 * Construit la clï¿½ ï¿½ partir des donnï¿½es dans le fot.
+	 *
+	 * @param input le flot d'entrï¿½e.
+	 * @throws IOException si une erreure se produit dans le flot.
+	 */
+	public MaskKey(final InputStream input) throws IOException {
+		super(input);
+	}
+
+	/**
+	 * Construit la clï¿½ ï¿½ partir du masque.
 	 *
 	 * @param m le masque.
 	 */
-	public MaskKey(Mask m) {
+	public MaskKey(final Mask m) {
 		super(m);
 	}
-	
-	/**
-	 * Construit la clé à partir des données dans le fot.
-	 *
-	 * @param input le flot d'entrée.
-	 * @throws IOException si une erreure se produit dans le flot.
-	 */
-	public MaskKey(InputStream input)
-		throws IOException {
-		super(input);
-	}
-	
+
 }

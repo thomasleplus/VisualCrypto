@@ -23,70 +23,72 @@ import java.util.Random;
 import org.leplus.libimage.PortableBitmap;
 
 /**
- * Générateur de Masques Cryptographiques.
+ * Gï¿½nï¿½rateur de Masques Cryptographiques.
  *
  * @version $Revision: 1.2 $
- * @author  Thomas Leplus <thomas@leplus.org>
+ * @author Thomas Leplus <thomas@leplus.org>
  */
 public final class MaskKeyGenerator {
-	
+
 	/**
-	 * La source d'aléat.
+	 * La source d'alï¿½at.
 	 */
-	private Random random;
-	
+	private final Random random;
+
 	/**
 	 * La hauteur du masque.
 	 */
-	private int height;
-	
+	private final int height;
+
 	/**
 	 * La largeur du masque.
 	 */
-	private int width;
-	
+	private final int width;
+
 	/**
-	 * Construit le générateur de masques.
+	 * Construit le gï¿½nï¿½rateur de masques.
 	 *
 	 * @param w la largeur des masques.
 	 * @param h la hauteur des masques.
 	 */
-	public MaskKeyGenerator(int w, int h) {
-		if (w < 1 || h < 1)
+	public MaskKeyGenerator(final int w, final int h) {
+		if (w < 1 || h < 1) {
 			throw new IndexOutOfBoundsException();
+		}
 		width = w;
 		height = h;
 		random = new Random();
 	}
-	
+
 	/**
-	 * Retourne la hauteur des masques générés.
+	 * Gï¿½nï¿½re une clï¿½.
+	 *
+	 * @return la clï¿½.
+	 */
+	public MaskKey generateKey() {
+		final byte[][] table = new byte[height][(int) StrictMath.ceil((double) width / 8)];
+		for (int i = 0; i < height; i++) {
+			random.nextBytes(table[i]);
+		}
+		return new MaskKey(new Mask(new PortableBitmap(table, width, height)));
+	}
+
+	/**
+	 * Retourne la hauteur des masques gï¿½nï¿½rï¿½s.
 	 *
 	 * @return la hauteur des masques.
 	 */
 	public int getHeight() {
 		return height;
 	}
-	
+
 	/**
-	 * Retourne la largeur des masques générés.
+	 * Retourne la largeur des masques gï¿½nï¿½rï¿½s.
 	 *
 	 * @return la largeur des masques.
 	 */
 	public int getWidth() {
 		return width;
 	}
-	
-	/**
-	 * Génère une clé.
-	 *
-	 * @return la clé.
-	 */
-	public MaskKey generateKey() {
-		byte[][] table = new byte[height][(int)StrictMath.ceil((double)width / 8)];
-		for (int i = 0; i < height; i++)
-			random.nextBytes(table[i]);
-		return new MaskKey(new Mask(new PortableBitmap(table, width, height)));
-	}
-	
+
 }

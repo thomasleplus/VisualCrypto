@@ -18,37 +18,34 @@
 
 package org.leplus.libcrypto;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Challenge d'Identification par Masque.
  *
  * @version $Revision: 1.2 $
- * @author  Thomas Leplus <thomas@leplus.org>
+ * @author Thomas Leplus <thomas@leplus.org>
  */
-public final class MaskChallenge
-	extends Mask {
-	
+public final class MaskChallenge extends Mask {
+
 	/**
-	 * Construit le challenge à partir du masque.
+	 * Construit le challenge de masque ï¿½ partir des donnï¿½es dans le fot.
+	 *
+	 * @param input le flot d'entrï¿½e.
+	 * @throws IOException si une erreure se produit dans le flot.
+	 */
+	public MaskChallenge(final InputStream input) throws IOException {
+		super(input);
+	}
+
+	/**
+	 * Construit le challenge ï¿½ partir du masque.
 	 *
 	 * @param m le masque.
 	 */
-	public MaskChallenge(Mask m) {
+	public MaskChallenge(final Mask m) {
 		super(m);
 	}
-	
-	/**
-	 * Construit le challenge de masque à partir des données dans le fot.
-	 *
-	 * @param input le flot d'entrée.
-	 * @throws IOException si une erreure se produit dans le flot.
-	 */
-	public MaskChallenge(InputStream input)
-		throws IOException {
-		super(input);
-	}
-	
+
 }
