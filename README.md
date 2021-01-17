@@ -1,7 +1,7 @@
 # VisualCrypto
 
-![Maven](https://github.com/thomasleplus/VisualCrypto/workflows/Maven/badge.svg)
-![CodeQL](https://github.com/thomasleplus/VisualCrypto/workflows/CodeQL/badge.svg)
+[![Maven](https://github.com/thomasleplus/VisualCrypto/workflows/Maven/badge.svg)](https://github.com/thomasleplus/VisualCrypto/actions?query=workflow:"Maven")
+[![CodeQL](https://github.com/thomasleplus/VisualCrypto/workflows/CodeQL/badge.svg)](https://github.com/thomasleplus/VisualCrypto/actions?query=workflow:"CodeQL")
 
 As part of my exchange with the University of Montreal, I
 implemented a visual cryptographic system (supervised by Pierre
