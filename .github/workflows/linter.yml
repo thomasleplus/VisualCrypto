@@ -26,6 +26,7 @@ on:
 ###############
 jobs:
   build:
+    if: ${{ secrets.GITHUB_TOKEN }}
     # Name the Job
     name: Lint Code Base
     # Set the agent to run on
