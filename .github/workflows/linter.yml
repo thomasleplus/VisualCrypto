@@ -26,11 +26,13 @@ on:
 ###############
 jobs:
   build:
-    if: ${{ secrets.GITHUB_TOKEN }}
     # Name the Job
     name: Lint Code Base
     # Set the agent to run on
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    if: ${{ env.GITHUB_TOKEN }}
 
     ##################
     # Load all steps #
@@ -53,4 +55,3 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
