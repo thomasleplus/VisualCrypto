@@ -87,7 +87,7 @@ public final class MaskChallengeOracle {
 			mask = mask.not();
 		}
 		final MaskChallenge mc = new MaskChallenge(mask.xor(key));
-		responses.put(mc, new Integer(figs[6]));
+		responses.put(mc, figs[6]);
 		return mc;
 	}
 

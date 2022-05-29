@@ -1,5 +1,7 @@
 package org.leplus.lib2D;
 
+import java.util.Arrays;
+
 /**
  * Polygone g�n�rique.
  *
@@ -80,18 +82,24 @@ public class Polygon2D {
 	}
 
 	@Override
-	public boolean equals(final Object object) {
-		final Polygon2D p = (Polygon2D) object;
-		if (points.length != p.points.length) {
-			return false;
-		}
-		for (int i = 0; i < points.length; i++) {
-			if (!points[i].equals(p.points[i])) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(points);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Polygon2D other = (Polygon2D) obj;
+        return Arrays.equals(points, other.points);
+    }
 
 	/**
 	 * Retourne le centre du polygone.

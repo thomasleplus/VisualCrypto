@@ -1,5 +1,7 @@
 package org.leplus.lib2D;
 
+import java.util.Arrays;
+
 /**
  * Matrice 2D.
  *
@@ -174,11 +176,24 @@ public class Matrix2D {
 	}
 
 	@Override
-	public boolean equals(final Object object) {
-		final Matrix2D n = (Matrix2D) object;
-		return m[0] == n.m[0] && m[1] == n.m[1] && m[2] == n.m[2] && m[3] == n.m[3] && m[4] == n.m[4] && m[5] == n.m[5]
-				&& m[6] == n.m[6] && m[7] == n.m[7] && m[8] == n.m[8];
-	}
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(m);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Matrix2D other = (Matrix2D) obj;
+        return Arrays.equals(m, other.m);
+    }
 
 	/**
 	 * Retourne la matrice de transformation inverse de cette matrice.

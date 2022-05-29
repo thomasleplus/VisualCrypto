@@ -1,5 +1,7 @@
 package org.leplus.lib2D;
 
+import java.util.Objects;
+
 /**
  * Vecteur.
  *
@@ -73,10 +75,23 @@ public class Vector2D {
 	}
 
 	@Override
-	public boolean equals(final Object object) {
-		final Vector2D p = (Vector2D) object;
-		return x == p.x && y == p.y;
-	}
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Vector2D other = (Vector2D) obj;
+        return Double.doubleToLongBits(x) == Double.doubleToLongBits(other.x)
+                && Double.doubleToLongBits(y) == Double
+                        .doubleToLongBits(other.y);
+    }
 
 	/**
 	 * Retourne r.
