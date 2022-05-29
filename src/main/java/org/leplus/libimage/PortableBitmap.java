@@ -3,6 +3,8 @@ package org.leplus.libimage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.Objects;
 
 import org.leplus.lib2D.Polygon2D;
 
@@ -177,23 +179,26 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	@Override
-	public boolean equals(final Object object) {
-		final PortableBitmap m = (PortableBitmap) object;
-		if (table.length != m.table.length) {
-			return false;
-		}
-		for (int i = 0; i < table.length; i++) {
-			if (table[i].length != m.table[i].length) {
-				return false;
-			}
-			for (int j = 0; j < table[i].length; j++) {
-				if (table[i][j] != m.table[i][j]) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.deepHashCode(table);
+        result = prime * result + Objects.hash(height, width);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PortableBitmap other = (PortableBitmap) obj;
+        return height == other.height && Arrays.deepEquals(table, other.table)
+                && width == other.width;
+    }
 
 	/**
 	 * Trace une ligne.

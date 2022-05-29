@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
 import org.leplus.libimage.PortableBitmap;
 
@@ -75,10 +76,21 @@ public class Mask {
 	}
 
 	@Override
-	public boolean equals(final Object object) {
-		final Mask m = (Mask) object;
-		return bmp.equals(m.bmp);
-	}
+    public int hashCode() {
+        return Objects.hash(bmp);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Mask other = (Mask) obj;
+        return Objects.equals(bmp, other.bmp);
+    }
 
 	/**
 	 * Retourne la hauteur du masque.
