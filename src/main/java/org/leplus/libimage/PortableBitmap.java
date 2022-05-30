@@ -3,10 +3,13 @@ package org.leplus.libimage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Objects;
 
 import org.leplus.lib2D.Polygon2D;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Portable Bitmap.
@@ -14,6 +17,7 @@ import org.leplus.lib2D.Polygon2D;
  * @version $Revision: 1.2 $
  * @author Thomas Leplus <thomas@leplus.org>
  */
+@SuppressFBWarnings("CN_IDIOM_NO_SUPER_CALL")
 public class PortableBitmap implements Cloneable {
 
 	/**
@@ -300,11 +304,11 @@ public class PortableBitmap implements Cloneable {
 	 */
 	private String readLine(final InputStream input) throws IOException {
 		char c;
-		String s = "";
+		StringBuilder s = new StringBuilder();
 		while ((c = (char) readByte(input)) != '\n') {
-			s += c;
+			s.append(c);
 		}
-		return s;
+		return s.toString();
 	}
 
 	/**
@@ -327,14 +331,15 @@ public class PortableBitmap implements Cloneable {
 
 	@Override
 	public String toString() {
-		String s = width + " " + height + "\n";
+		StringBuilder s = new StringBuilder();
+		s.append(width).append(" ").append(height).append("\n");
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				s += getValue(j, i) ? "1" : "0";
+				s.append(getValue(j, i) ? 1 : 0);
 			}
-			s += "\n";
+			s.append('\n');
 		}
-		return s;
+		return s.toString();
 	}
 
 	/**
@@ -344,8 +349,7 @@ public class PortableBitmap implements Cloneable {
 	 * @throws IOException si une erreure se produit dans le flot.
 	 */
 	public void write(final OutputStream output) throws IOException {
-		final String header = "P4\n" + width + "\n" + height + "\n";
-		output.write(header.getBytes("US-ASCII"));
+		output.write(("P4\n" + width + "\n" + height + "\n").getBytes(StandardCharsets.UTF_8));
 		for (int i = 0; i < height; i++) {
 			output.write(table[i]);
 		}

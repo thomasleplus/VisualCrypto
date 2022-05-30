@@ -1,5 +1,6 @@
 package org.leplus.libcrypto;
 
+import java.security.SecureRandom;
 import java.util.Hashtable;
 import java.util.Random;
 
@@ -38,7 +39,7 @@ public final class MaskChallengeOracle {
 	 * Construit l'oracle.
 	 */
 	public MaskChallengeOracle() {
-		random = new Random();
+		random = new SecureRandom();
 	}
 
 	/**
@@ -81,7 +82,7 @@ public final class MaskChallengeOracle {
 			default:
 			    throw new IllegalStateException("Unexpected figure " + figs[i]);
 			}
-			p.transform(m.rotate(random.nextDouble()).translate(w / 3 * (i % 3) + w / 6, h / 2 * (i / 3) + h / 4));
+			p = p.transform(m.rotate(random.nextDouble()).translate(w / 3.0 * (i % 3) + w / 6.0, h / 2.0 * (i / 3.0) + h / 4.0));
 			pbm.drawFilled(true, p);
 		}
 		Mask mask = new Mask(pbm);

@@ -26,7 +26,7 @@ public class Polygon2D {
 	/**
 	 * Les sommets du polygone.
 	 */
-	protected Point2D[] points;
+	private Point2D[] points;
 
 	/**
 	 * Construit un polygone r�gulier centr� en (0, 0) et de n sommets (au moins 3),
@@ -78,7 +78,7 @@ public class Polygon2D {
 	 * @param p les points du polygone.
 	 */
 	public Polygon2D(final Point2D[] t) {
-		points = t;
+		points = t == null ? null : Arrays.copyOf(t, t.length);
 	}
 
 	@Override
@@ -132,15 +132,11 @@ public class Polygon2D {
 	}
 
 	@Override
-	public String toString() {
-		String s = "center: " + getCenter() + "\n" + getNumTops() + " tops:\n";
-		for (int i = 0; i < getNumTops(); i++) {
-			s += "   " + getTop(i) + "\n";
-		}
-		return s;
-	}
+    public String toString() {
+        return "Polygon2D [points=" + Arrays.toString(points) + "]";
+    }
 
-	/**
+    /**
 	 * Applique la matrice de transformation donn�e au polygone et retourne le
 	 * r�sultat.
 	 *

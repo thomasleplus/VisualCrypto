@@ -1,5 +1,6 @@
 package org.leplus.libcrypto;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 import org.leplus.libimage.PortableBitmap;
@@ -39,7 +40,7 @@ public final class MaskKeyGenerator {
 		}
 		width = w;
 		height = h;
-		random = new Random();
+		random = new SecureRandom();
 	}
 
 	/**

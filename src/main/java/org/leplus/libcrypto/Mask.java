@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import org.leplus.libimage.PortableBitmap;
@@ -208,7 +209,7 @@ public class Mask {
     public void print(final OutputStream output) throws IOException {
         final String header = "P4\n" + (bmp.width << 3) + "\n"
                 + (bmp.height << 3) + "\n";
-        output.write(header.getBytes("US-ASCII"));
+        output.write(header.getBytes(StandardCharsets.UTF_8));
         for (int i = 0; i < bmp.height; i++) {
             for (int j = 0; j < 8; j++) {
                 for (int k = 0; k < bmp.width; k++) {

@@ -3,8 +3,8 @@ package org.leplus.masklogin;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.BoxLayout;
@@ -24,6 +24,9 @@ import org.leplus.libcrypto.MaskChallenge;
 import org.leplus.libcrypto.MaskChallengeOracle;
 import org.leplus.libcrypto.MaskKey;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+@SuppressFBWarnings("PATH_TRAVERSAL_IN")
 public final class Main {
 
 	private static final class cancelMask implements ActionListener {
@@ -109,15 +112,11 @@ public final class Main {
 	private static MaskChallenge challenge;
 
 	public static boolean checkID(final String id) {
-		try {
-			final InputStream is = new FileInputStream(id + ".key");
-			final MaskKey key = new MaskKey(is);
-			is.close();
-			challenge = oracle.generateChallenge(key);
-			new ByteArrayOutputStream();
+		try (InputStream is = new FileInputStream(id + ".key")) {
+			challenge = oracle.generateChallenge(new MaskKey(is));
 			challenge.print(bmpImage);
 			return true;
-		} catch (final Exception e) {
+		} catch (final IOException e) {
 			challenge = null;
 			clear(bmpImage);
 			return false;
