@@ -78,6 +78,8 @@ public final class MaskChallengeOracle {
 			case CIRCLE:
 				p = makePolygon((int) StrictMath.min(w / 3, h / 2));
 				break;
+			default:
+			    throw new IllegalStateException("Unexpected figure " + figs[i]);
 			}
 			p.transform(m.rotate(random.nextDouble()).translate(w / 3 * (i % 3) + w / 6, h / 2 * (i / 3) + h / 4));
 			pbm.drawFilled(true, p);
@@ -129,7 +131,7 @@ public final class MaskChallengeOracle {
 
 	private void shuffle(final int[] t) {
 		for (int i = 0; i < t.length - 1; i++) {
-			final int j = StrictMath.abs(random.nextInt()) % (t.length - i - 1) + i + 1;
+			final int j = StrictMath.abs(random.nextInt(Integer.MAX_VALUE)) % (t.length - i - 1) + i + 1;
 			final int k = t[i];
 			t[i] = t[j];
 			t[j] = k;

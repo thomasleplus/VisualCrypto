@@ -6,9 +6,12 @@ import java.io.IOException;
 import org.leplus.libcrypto.Mask;
 import org.leplus.libcrypto.MaskKeyGenerator;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+@SuppressFBWarnings("PATH_TRAVERSAL_OUT")
 public final class Main {
 
-	public static MaskKeyGenerator gen = new MaskKeyGenerator(75, 50);
+	public static final MaskKeyGenerator gen = new MaskKeyGenerator(75, 50);
 
 	public static void main(final String[] args) throws IOException {
 		for (int i = 0; i < args.length; i++) {
