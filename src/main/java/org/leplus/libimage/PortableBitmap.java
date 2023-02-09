@@ -248,9 +248,10 @@ public class PortableBitmap implements Cloneable {
 	 * Lit la cl� dans le flot.
 	 *
 	 * @param input le flot d'entr�e.
-	 * @throws IOException si une erreure se produit dans le flot.
+     * @throws IOException si une erreure se produit dans le flot.
+     * @throws NumberFormatException si une erreure se produit dans le parsing.
 	 */
-	public void read(final InputStream input) throws IOException {
+	public void read(final InputStream input) throws IOException, NumberFormatException {
 		if (!readLine(input).equals("P4")) {
 			throw new IOException("Invalid format");
 		}
