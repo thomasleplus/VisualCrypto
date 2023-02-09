@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
  * @author thomas
  *
  */
-class TestMain {
+public class TestMain {
 
     @Test
     void test() throws IOException {
