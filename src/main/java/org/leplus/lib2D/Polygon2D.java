@@ -75,7 +75,7 @@ public class Polygon2D {
 	 * Construit un polygone dont les sommets sont les points donn�s (le premier
 	 * point est le centre et les points suivants sont les sommets successifs).
 	 *
-	 * @param p les points du polygone.
+	 * @param t les points du polygone.
 	 */
 	public Polygon2D(final Point2D[] t) {
 		points = t == null ? null : Arrays.copyOf(t, t.length);
