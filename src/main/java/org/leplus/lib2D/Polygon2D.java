@@ -2,6 +2,8 @@ package org.leplus.lib2D;
 
 import java.util.Arrays;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Polygone g�n�rique.
  *
@@ -35,6 +37,7 @@ public class Polygon2D {
 	 *
 	 * @param n le nombre de sommets du polygone (au moins 3).
 	 */
+        @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
 	public Polygon2D(final int n) {
 		if (n < 3) {
 			throw new IndexOutOfBoundsException();

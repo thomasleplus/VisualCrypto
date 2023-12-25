@@ -9,6 +9,8 @@ import java.util.Objects;
 
 import org.leplus.libimage.PortableBitmap;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Masque cryptographique.
  *
@@ -28,6 +30,7 @@ public class Mask {
      * @param input le flot d'entr�e.
      * @throws IOException si une erreure se produit dans le flot.
      */
+    @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
     public Mask(final InputStream input) throws IOException {
         bmp = new PortableBitmap();
         bmp.read(input);
@@ -48,6 +51,7 @@ public class Mask {
      *
      * @param pbm le bitmap
      */
+    @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
     public Mask(final PortableBitmap pbm) {
         bmp = (PortableBitmap) pbm.clone();
         trim();
@@ -61,15 +65,15 @@ public class Mask {
      */
     public Mask and(final Mask mask) {
         final Mask and = new Mask(bmp);
-        if (and.bmp.table.length != mask.bmp.table.length) {
+        if (and.bmp.getTable().length != mask.bmp.getTable().length) {
             throw new IndexOutOfBoundsException();
         }
-        for (int i = 0; i < and.bmp.table.length; i++) {
-            if (and.bmp.table[i].length != mask.bmp.table[i].length) {
+        for (int i = 0; i < and.bmp.getTable().length; i++) {
+            if (and.bmp.getTable()[i].length != mask.bmp.getTable()[i].length) {
                 throw new IndexOutOfBoundsException();
             }
-            for (int j = 0; j < and.bmp.table[i].length; j++) {
-                and.bmp.table[i][j] &= mask.bmp.table[i][j];
+            for (int j = 0; j < and.bmp.getTable()[i].length; j++) {
+                and.bmp.getTable()[i][j] &= mask.bmp.getTable()[i][j];
             }
         }
         and.trim();
@@ -94,7 +98,7 @@ public class Mask {
      * @return la hauteur du masque.
      */
     public int getHeight() {
-        return bmp.height;
+        return bmp.getHeight();
     }
 
     /**
@@ -113,7 +117,7 @@ public class Mask {
      * @return la largeur du masque.
      */
     public int getWidth() {
-        return bmp.width;
+        return bmp.getWidth();
     }
 
     @Override
@@ -128,9 +132,9 @@ public class Mask {
      */
     public Mask not() {
         final Mask not = new Mask(bmp);
-        for (int i = 0; i < not.bmp.table.length; i++) {
-            for (int j = 0; j < not.bmp.table[i].length; j++) {
-                not.bmp.table[i][j] ^= 0xFF;
+        for (int i = 0; i < not.bmp.getTable().length; i++) {
+            for (int j = 0; j < not.bmp.getTable()[i].length; j++) {
+                not.bmp.getTable()[i][j] ^= 0xFF;
             }
         }
         not.trim();
@@ -145,15 +149,15 @@ public class Mask {
      */
     public Mask or(final Mask mask) {
         final Mask or = new Mask(bmp);
-        if (or.bmp.table.length != mask.bmp.table.length) {
+        if (or.bmp.getTable().length != mask.bmp.getTable().length) {
             throw new IndexOutOfBoundsException();
         }
-        for (int i = 0; i < or.bmp.table.length; i++) {
-            if (or.bmp.table[i].length != mask.bmp.table[i].length) {
+        for (int i = 0; i < or.bmp.getTable().length; i++) {
+            if (or.bmp.getTable()[i].length != mask.bmp.getTable()[i].length) {
                 throw new IndexOutOfBoundsException();
             }
-            for (int j = 0; j < or.bmp.table[i].length; j++) {
-                or.bmp.table[i][j] |= mask.bmp.table[i][j];
+            for (int j = 0; j < or.bmp.getTable()[i].length; j++) {
+                or.bmp.getTable()[i][j] |= mask.bmp.getTable()[i][j];
             }
         }
         or.trim();
@@ -173,8 +177,8 @@ public class Mask {
      * @param output l'image de sortie.
      */
     public void print(final BufferedImage output) {
-        for (int i = 0; i < bmp.width; i++) {
-            for (int j = 0; j < bmp.height; j++) {
+        for (int i = 0; i < getWidth(); i++) {
+            for (int j = 0; j < getHeight(); j++) {
                 final boolean b = getValue(i, j);
                 for (int k = 0; k < 8; k++) {
                     for (int l = 0; l < 8; l++) {
@@ -207,12 +211,12 @@ public class Mask {
      * @throws IOException si une erreure se produit dans le flot.
      */
     public void print(final OutputStream output) throws IOException {
-        final String header = "P4\n" + (bmp.width << 3) + "\n"
-                + (bmp.height << 3) + "\n";
+        final String header = "P4\n" + (getWidth() << 3) + "\n"
+                + (getHeight() << 3) + "\n";
         output.write(header.getBytes(StandardCharsets.UTF_8));
-        for (int i = 0; i < bmp.height; i++) {
+        for (int i = 0; i < getHeight(); i++) {
             for (int j = 0; j < 8; j++) {
-                for (int k = 0; k < bmp.width; k++) {
+                for (int k = 0; k < getWidth(); k++) {
                     final boolean b = getValue(k, i);
                     if (b ? j < 4 : j > 3) {
                         output.write((byte) 0xF0);
@@ -233,16 +237,16 @@ public class Mask {
      * Met � z�ro les bits inutilis�s du masque.
      */
     private void trim() {
-        final int w = (int) StrictMath.ceil((double) bmp.width / 8);
-        final int m = 0xFF << (w << 3) - bmp.width;
-        if (bmp.table.length != bmp.height) {
+        final int w = (int) StrictMath.ceil((double) getWidth() / 8);
+        final int m = 0xFF << (w << 3) - getWidth();
+        if (bmp.getTable().length != getHeight()) {
             throw new IndexOutOfBoundsException();
         }
-        for (int i = 0; i < bmp.height; i++) {
-            if (bmp.table[i].length != w) {
+        for (int i = 0; i < getHeight(); i++) {
+            if (bmp.getTable()[i].length != w) {
                 throw new IndexOutOfBoundsException();
             }
-            bmp.table[i][w - 1] &= m;
+            bmp.getTable()[i][w - 1] &= m;
         }
     }
 
@@ -264,15 +268,15 @@ public class Mask {
      */
     public Mask xor(final Mask mask) {
         final Mask xor = new Mask(bmp);
-        if (xor.bmp.table.length != mask.bmp.table.length) {
+        if (xor.bmp.getTable().length != mask.bmp.getTable().length) {
             throw new IndexOutOfBoundsException();
         }
-        for (int i = 0; i < xor.bmp.table.length; i++) {
-            if (xor.bmp.table[i].length != mask.bmp.table[i].length) {
+        for (int i = 0; i < xor.bmp.getTable().length; i++) {
+            if (xor.bmp.getTable()[i].length != mask.bmp.getTable()[i].length) {
                 throw new IndexOutOfBoundsException();
             }
-            for (int j = 0; j < xor.bmp.table[i].length; j++) {
-                xor.bmp.table[i][j] ^= mask.bmp.table[i][j];
+            for (int j = 0; j < xor.bmp.getTable()[i].length; j++) {
+                xor.bmp.getTable()[i][j] ^= mask.bmp.getTable()[i][j];
             }
         }
         xor.trim();

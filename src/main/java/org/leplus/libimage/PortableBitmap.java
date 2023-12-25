@@ -23,17 +23,17 @@ public class PortableBitmap implements Cloneable {
 	/**
 	 * Les donn�es du bitmap.
 	 */
-	public byte[][] table;
+	private byte[][] table;
 
 	/**
 	 * La largeur du bitmap.
 	 */
-	public int width;
+	private int width;
 
 	/**
 	 * La hauteur du bitmap.
 	 */
-	public int height;
+	private int height;
 
 	/**
 	 * Construit le bitmap vide.
@@ -51,7 +51,8 @@ public class PortableBitmap implements Cloneable {
 	 * @param w la largeur.
 	 * @param h la hauteur.
 	 */
-	public PortableBitmap(final byte[][] t, final int w, final int h) {
+        @SuppressFBWarnings({"CT_CONSTRUCTOR_THROW", "EI_EXPOSE_REP2"})
+		public PortableBitmap(final byte[][] t, final int w, final int h) {
 		if (w < 1 || h < 1 || h > t.length) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -72,6 +73,7 @@ public class PortableBitmap implements Cloneable {
 	 * @param input le flot d'entr�e.
 	 * @throws IOException si une erreure se produit dans le flot.
 	 */
+        @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
 	public PortableBitmap(final InputStream input) throws IOException {
 		read(input);
 	}
@@ -82,6 +84,7 @@ public class PortableBitmap implements Cloneable {
 	 * @param w la largeur.
 	 * @param h la hauteur.
 	 */
+        @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
 	public PortableBitmap(final int w, final int h) {
 		this(new byte[h][(int) StrictMath.ceil((double) w / 8)], w, h);
 	}
@@ -356,4 +359,16 @@ public class PortableBitmap implements Cloneable {
 		}
 	}
 
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	@SuppressFBWarnings("EI_EXPOSE_REP")
+	public byte[][] getTable() {
+		return table;
+	}
 }
