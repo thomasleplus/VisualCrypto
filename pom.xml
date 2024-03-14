@@ -64,7 +64,7 @@
     <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <dependencyCheck.version>9.0.7</dependencyCheck.version>
+    <dependencyCheck.version>9.0.9</dependencyCheck.version>
     <dependencyCheck.skip>false</dependencyCheck.skip>
     <dependencyCheck.threshold>7</dependencyCheck.threshold>
   </properties>
@@ -84,7 +84,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>5.10.1</version>
+      <version>5.10.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -207,13 +207,13 @@
       <plugin>
 	<groupId>com.github.spotbugs</groupId>
 	<artifactId>spotbugs-maven-plugin</artifactId>
-	<version>4.8.2.0</version>
+	<version>4.8.3.1</version>
         <configuration>
           <plugins>
             <plugin>
               <groupId>com.h3xstream.findsecbugs</groupId>
               <artifactId>findsecbugs-plugin</artifactId>
-              <version>1.12.0</version>
+              <version>1.13.0</version>
             </plugin>
           </plugins>
         </configuration>
