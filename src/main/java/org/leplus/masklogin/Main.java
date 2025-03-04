@@ -29,11 +29,10 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings("PATH_TRAVERSAL_IN")
 public final class Main {
 
-	private static final class cancelMask implements ActionListener {
+	private static final class CancelMask implements ActionListener {
 
 		@Override
 		public void actionPerformed(final ActionEvent e) {
-			challenge = null;
 			clear(bmpImage);
 			modeID();
 			mainFrame.repaint();
@@ -41,7 +40,7 @@ public final class Main {
 
 	}
 
-	private static final class showMask implements ActionListener {
+	private static final class ShowMask implements ActionListener {
 
 		@Override
 		public void actionPerformed(final ActionEvent e) {
@@ -60,7 +59,7 @@ public final class Main {
 
 	}
 
-	private static final class validateMask implements ActionListener {
+	private static final class ValidateMask implements ActionListener {
 
 		@Override
 		public void actionPerformed(final ActionEvent e) {
@@ -74,7 +73,6 @@ public final class Main {
 					JOptionPane.showMessageDialog(mainFrame, "Challenge failed.", "Message",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
-				challenge = null;
 				clear(bmpImage);
 				modeID();
 				mainFrame.repaint();
@@ -117,7 +115,6 @@ public final class Main {
 			challenge.print(bmpImage);
 			return true;
 		} catch (final IOException e) {
-			challenge = null;
 			clear(bmpImage);
 			return false;
 		}
@@ -149,6 +146,7 @@ public final class Main {
 	}
 
 	public static void clear(final BufferedImage image) {
+	        challenge = null;
 		for (int i = image.getMinX(); i < image.getMinX() + image.getWidth(); i++) {
 			for (int j = image.getMinY(); j < image.getMinY() + image.getHeight(); j++) {
 				image.setRGB(i, j, 0);
@@ -164,7 +162,7 @@ public final class Main {
 		loginField = new JTextField(50);
 
 		loginButton = new JButton("Continue");
-		loginButton.addActionListener(new showMask());
+		loginButton.addActionListener(new ShowMask());
 
 		final JPanel idPanel = new JPanel();
 		final TitledBorder idBorder = new TitledBorder("Login: ");
@@ -197,10 +195,10 @@ public final class Main {
 		group.add(circleButton);
 
 		okButton = new JButton("Validate");
-		okButton.addActionListener(new validateMask());
+		okButton.addActionListener(new ValidateMask());
 
 		cancelButton = new JButton("Cancel");
-		cancelButton.addActionListener(new cancelMask());
+		cancelButton.addActionListener(new CancelMask());
 
 		final JPanel radioPanel = new JPanel();
 		final TitledBorder radioBorder = new TitledBorder("Select missing shape:");
@@ -224,7 +222,6 @@ public final class Main {
 		mainFrame.setVisible(true);
 
 		oracle = new MaskChallengeOracle();
-		challenge = null;
 
 	}
 

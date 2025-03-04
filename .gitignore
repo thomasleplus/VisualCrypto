@@ -5,6 +5,8 @@ pom.xml.releaseBackup
 pom.xml.tag
 release.properties
 .m2/
+test.key
+test.pbm
 
 # Eclipse stuff #
 .project
