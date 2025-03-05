@@ -25,7 +25,7 @@ public final class MaskChallengeOracle {
 	/**
 	 * Les r�ponses des challenges g�n�r�s.
 	 */
-	private static final Hashtable responses = new Hashtable();
+	private static final Hashtable<MaskChallenge, Integer> responses = new Hashtable<>();
 
 	/**
 	 * La source d'al�at.
@@ -144,8 +144,7 @@ public final class MaskChallengeOracle {
 	 * @return true si la r�ponse est correcte, false sinon.
 	 */
 	public boolean verifyChallenge(final MaskChallenge challenge, final int response) {
-		final Integer i = (Integer) responses.get(challenge);
-		return i.intValue() == response;
+		return responses.get(challenge).equals(response);
 	}
 
 }

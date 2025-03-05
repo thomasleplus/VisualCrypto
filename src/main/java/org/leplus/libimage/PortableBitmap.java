@@ -251,7 +251,7 @@ public class PortableBitmap implements Cloneable {
      * @throws IOException si une erreure se produit dans le flot.
      * @throws NumberFormatException si une erreure se produit dans le parsing.
 	 */
-	public void read(final InputStream input) throws IOException, NumberFormatException {
+	public final void read(final InputStream input) throws IOException, NumberFormatException {
 		if (!readLine(input).equals("P4")) {
 			throw new IOException("Invalid format");
 		}
@@ -262,7 +262,7 @@ public class PortableBitmap implements Cloneable {
 		final int m = 0xFF << (width & 0x07);
 		for (int i = 0; i < height; i++) {
 			readBytes(input, table[i]);
-			table[i][w - 1] &= m;
+			table[i][w - 1] &= (byte) m;
 		}
 	}
 
@@ -324,9 +324,9 @@ public class PortableBitmap implements Cloneable {
 			throw new IndexOutOfBoundsException();
 		}
 		if (b) {
-			table[v][u >>> 3] |= 128 >>> (u & 7);
+			table[v][u >>> 3] |= (byte) (128 >>> (u & 7));
 		} else {
-			table[v][u >>> 3] &= 127 >>> (u & 7);
+			table[v][u >>> 3] &= (byte) (127 >>> (u & 7));
 		}
 	}
 

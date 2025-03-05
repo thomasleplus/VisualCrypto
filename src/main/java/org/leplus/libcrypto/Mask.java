@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
+
 import org.leplus.libimage.PortableBitmap;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -28,6 +29,7 @@ public class Mask {
      * @throws IOException si une erreure se produit dans le flot.
      */
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
+    @SuppressWarnings("this-escape")
     public Mask(final InputStream input) throws IOException {
         bmp = new PortableBitmap();
         bmp.read(input);
@@ -49,6 +51,7 @@ public class Mask {
      * @param pbm le bitmap
      */
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
+    @SuppressWarnings("this-escape")
     public Mask(final PortableBitmap pbm) {
         bmp = (PortableBitmap) pbm.clone();
         trim();
@@ -131,7 +134,7 @@ public class Mask {
         final Mask not = new Mask(bmp);
         for (int i = 0; i < not.bmp.getTable().length; i++) {
             for (int j = 0; j < not.bmp.getTable()[i].length; j++) {
-                not.bmp.getTable()[i][j] ^= 0xFF;
+                not.bmp.getTable()[i][j] ^= (byte) 0xFF;
             }
         }
         not.trim();
@@ -243,7 +246,7 @@ public class Mask {
             if (bmp.getTable()[i].length != w) {
                 throw new IndexOutOfBoundsException();
             }
-            bmp.getTable()[i][w - 1] &= m;
+            bmp.getTable()[i][w - 1] &= (byte) m;
         }
     }
 
