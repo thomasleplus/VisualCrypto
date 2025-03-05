@@ -13,9 +13,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Portable Bitmap.
- *
- * @version $Revision: 1.2 $
- * @author Thomas Leplus <thomas@leplus.org>
  */
 @SuppressFBWarnings("CN_IDIOM_NO_SUPER_CALL")
 public class PortableBitmap implements Cloneable {

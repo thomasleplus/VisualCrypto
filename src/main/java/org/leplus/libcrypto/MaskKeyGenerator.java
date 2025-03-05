@@ -7,9 +7,6 @@ import org.leplus.libimage.PortableBitmap;
 
 /**
  * G�n�rateur de Masques Cryptographiques.
- *
- * @version $Revision: 1.2 $
- * @author Thomas Leplus <thomas@leplus.org>
  */
 public final class MaskKeyGenerator {
 

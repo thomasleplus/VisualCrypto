@@ -9,10 +9,6 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * @author thomas
- *
- */
 public class TestMain {
 
     @Test

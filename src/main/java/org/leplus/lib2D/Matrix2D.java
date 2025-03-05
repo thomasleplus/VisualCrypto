@@ -4,9 +4,6 @@ import java.util.Arrays;
 
 /**
  * Matrice 2D.
- *
- * @version $Revision: 1.2 $
- * @author Thomas Leplus <thomas@leplus.org>
  */
 public class Matrix2D {
 

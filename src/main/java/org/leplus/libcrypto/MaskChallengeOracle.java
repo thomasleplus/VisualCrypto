@@ -11,9 +11,6 @@ import org.leplus.libimage.PortableBitmap;
 
 /**
  * Oracle de Challenge d'Identification par Masque.
- *
- * @version $Revision: 1.2 $
- * @author Thomas Leplus <thomas@leplus.org>
  */
 public final class MaskChallengeOracle {
 

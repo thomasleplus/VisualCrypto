@@ -4,9 +4,6 @@ import java.util.Objects;
 
 /**
  * Point.
- *
- * @version $Revision: 1.2 $
- * @author Thomas Leplus <thomas@leplus.org>
  */
 public class Point2D {
 

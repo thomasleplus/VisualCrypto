@@ -5,9 +5,6 @@ import java.io.InputStream;
 
 /**
  * Cl� de Masque Cryptographique.
- *
- * @version $Revision: 1.2 $
- * @author Thomas Leplus <thomas@leplus.org>
  */
 public final class MaskKey extends Mask {
 

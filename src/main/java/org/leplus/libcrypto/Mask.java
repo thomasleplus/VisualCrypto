@@ -13,9 +13,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Masque cryptographique.
- *
- * @version $Revision: 1.2 $
- * @author Thomas Leplus <thomas@leplus.org>
  */
 public class Mask {
 

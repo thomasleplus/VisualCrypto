@@ -6,9 +6,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Polygone g�n�rique.
- *
- * @version $Revision: 1.2 $
- * @author Thomas Leplus <thomas@leplus.org>
  */
 public class Polygon2D {
 

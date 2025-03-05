@@ -4,9 +4,6 @@ import java.util.Objects;
 
 /**
  * Vecteur.
- *
- * @version $Revision: 1.2 $
- * @author Thomas Leplus <thomas@leplus.org>
  */
 public class Vector2D {
 
