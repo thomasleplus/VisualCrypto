@@ -131,12 +131,13 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.14.0</version>
         <configuration>
+          <encoding>UTF-8</encoding>
           <release>${java.minVersion}</release>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
           <compilerArgs>
             <arg>-Xlint:all</arg>
-            <arg>-Xdoclint:all</arg>
+            <arg>-XWerror</arg>
           </compilerArgs>
         </configuration>
       </plugin>
