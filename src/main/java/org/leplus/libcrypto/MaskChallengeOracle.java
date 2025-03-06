@@ -23,12 +23,12 @@ public final class MaskChallengeOracle {
 	public static final int CIRCLE = 64;
 
 	/**
-	 * Les r�ponses des challenges g�n�r�s.
+	 * Les réponses des challenges générés.
 	 */
 	private static final Hashtable<MaskChallenge, Integer> responses = new Hashtable<>();
 
 	/**
-	 * La source d'al�at.
+	 * La source d'aléat.
 	 */
 	private final Random random;
 
@@ -40,9 +40,9 @@ public final class MaskChallengeOracle {
 	}
 
 	/**
-	 * G�n�re un challenge pour la cl� donn�e.
+	 * Génère un challenge pour la clé donnée.
 	 *
-	 * @param key la cl�.
+	 * @param key la clé.
 	 * @return le challenge.
 	 */
 	public MaskChallenge generateChallenge(final MaskKey key) {
@@ -137,11 +137,11 @@ public final class MaskChallengeOracle {
 	}
 
 	/**
-	 * G�n�re un challenge pour la cl� donn�e.
+	 * Génère un challenge pour la clé donnée.
 	 *
 	 * @param challenge le challenge.
-	 * @param response  la r�ponse.
-	 * @return true si la r�ponse est correcte, false sinon.
+	 * @param response  la réponse.
+	 * @return true si la réponse est correcte, false sinon.
 	 */
 	public boolean verifyChallenge(final MaskChallenge challenge, final int response) {
 		return responses.get(challenge).equals(response);

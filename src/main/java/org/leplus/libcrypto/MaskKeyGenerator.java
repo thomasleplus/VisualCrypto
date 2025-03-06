@@ -6,12 +6,12 @@ import java.util.Random;
 import org.leplus.libimage.PortableBitmap;
 
 /**
- * G�n�rateur de Masques Cryptographiques.
+ * Générateur de Masques Cryptographiques.
  */
 public final class MaskKeyGenerator {
 
 	/**
-	 * La source d'al�at.
+	 * La source d'aléat.
 	 */
 	private final Random random;
 
@@ -26,7 +26,7 @@ public final class MaskKeyGenerator {
 	private final int width;
 
 	/**
-	 * Construit le g�n�rateur de masques.
+	 * Construit le générateur de masques.
 	 *
 	 * @param w la largeur des masques.
 	 * @param h la hauteur des masques.
@@ -41,9 +41,9 @@ public final class MaskKeyGenerator {
 	}
 
 	/**
-	 * G�n�re une cl�.
+	 * Génère une clé.
 	 *
-	 * @return la cl�.
+	 * @return la clé.
 	 */
 	public MaskKey generateKey() {
 		final byte[][] table = new byte[height][(int) StrictMath.ceil((double) width / 8)];
@@ -54,7 +54,7 @@ public final class MaskKeyGenerator {
 	}
 
 	/**
-	 * Retourne la hauteur des masques g�n�r�s.
+	 * Retourne la hauteur des masques générés.
 	 *
 	 * @return la hauteur des masques.
 	 */
@@ -63,7 +63,7 @@ public final class MaskKeyGenerator {
 	}
 
 	/**
-	 * Retourne la largeur des masques g�n�r�s.
+	 * Retourne la largeur des masques générés.
 	 *
 	 * @return la largeur des masques.
 	 */

@@ -55,7 +55,7 @@ public class Vector2D {
 	/**
 	 * Retourne la somme de ce vecteur et vector.
 	 *
-	 * @return le r�sulat.
+	 * @return le résulat.
 	 */
 	public Vector2D add(final Vector2D vector) {
 		return new Vector2D(x + vector.x, y + vector.y);
@@ -127,16 +127,16 @@ public class Vector2D {
 	}
 
 	/**
-	 * Retourne le vecteur oppos� � ce vecteur. (-x, -y)
+	 * Retourne le vecteur opposé à ce vecteur. (-x, -y)
 	 *
-	 * @return le vecteur oppos�.
+	 * @return le vecteur opposé.
 	 */
 	public Vector2D neg() {
 		return new Vector2D(-x, -y);
 	}
 
 	/**
-	 * Retourne un vecteur perpendiculaire � ce vecteur. (-y, x)
+	 * Retourne un vecteur perpendiculaire à ce vecteur. (-y, x)
 	 *
 	 * @return un vecteur perpendiculaire.
 	 */
@@ -145,9 +145,9 @@ public class Vector2D {
 	}
 
 	/**
-	 * Retourne la diff�rence de ce vecteur et vector.
+	 * Retourne la différence de ce vecteur et vector.
 	 *
-	 * @return le r�sulat.
+	 * @return le résulat.
 	 */
 	public Vector2D subtract(final Vector2D vector) {
 		return new Vector2D(x - vector.x, y - vector.y);
@@ -159,7 +159,7 @@ public class Vector2D {
 	}
 
 	/**
-	 * Retourne le vecteur apr�s la transformation donn�e.
+	 * Retourne le vecteur après la transformation donnée.
 	 *
 	 * @param t la matrice de transformation
 	 * @return le nouveau vecteur

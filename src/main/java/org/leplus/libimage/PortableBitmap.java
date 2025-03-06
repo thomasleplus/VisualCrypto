@@ -18,7 +18,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class PortableBitmap implements Cloneable {
 
 	/**
-	 * Les donn�es du bitmap.
+	 * Les données du bitmap.
 	 */
 	private byte[][] table;
 
@@ -42,7 +42,7 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * Construit le bitmap � partir du tableau et des dimensions donn�e.
+	 * Construit le bitmap à partir du tableau et des dimensions donnée.
 	 *
 	 * @param t le tableau d'au moins h lignes et ceil(w/8) colonnes.
 	 * @param w la largeur.
@@ -65,9 +65,9 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * Construit le bitmap � partir des donn�es dans le fot.
+	 * Construit le bitmap à partir des données dans le fot.
 	 *
-	 * @param input le flot d'entr�e.
+	 * @param input le flot d'entrée.
 	 * @throws IOException si une erreure se produit dans le flot.
 	 */
         @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
@@ -76,7 +76,7 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * Construit le bitmap vide � partir du tableau et des dimensions donn�e.
+	 * Construit le bitmap vide à partir du tableau et des dimensions donnée.
 	 *
 	 * @param w la largeur.
 	 * @param h la hauteur.
@@ -97,10 +97,10 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * Dessine le polyg�ne sur le bitmap.
+	 * Dessine le polygône sur le bitmap.
 	 *
 	 * @param b  la couleur.
-	 * @param pg le polyg�ne.
+	 * @param pg le polygône.
 	 */
 	public void draw(final boolean b, final Polygon2D pg) {
 		int x1, y1, x2, y2;
@@ -116,10 +116,10 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * Dessine le polyg�ne plein sur le bitmap.
+	 * Dessine le polygône plein sur le bitmap.
 	 *
 	 * @param b  la couleur.
-	 * @param pg le polyg�ne.
+	 * @param pg le polygône.
 	 */
 	public void drawFilled(final boolean b, final Polygon2D pg) {
 		draw(b, pg);
@@ -231,7 +231,7 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * Retourne la valeur du bitmap pour la coordonn�e donn�e.
+	 * Retourne la valeur du bitmap pour la coordonnée donnée.
 	 *
 	 * @param u la colonne.
 	 * @param v la ligne.
@@ -245,9 +245,9 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * Lit la cl� dans le flot.
+	 * Lit la clé dans le flot.
 	 *
-	 * @param input le flot d'entr�e.
+	 * @param input le flot d'entrée.
      * @throws IOException si une erreure se produit dans le flot.
      * @throws NumberFormatException si une erreure se produit dans le parsing.
 	 */
@@ -269,7 +269,7 @@ public class PortableBitmap implements Cloneable {
 	/**
 	 * Lit un octet dans le flot.
 	 *
-	 * @param input le flot d'entr�e.
+	 * @param input le flot d'entrée.
 	 * @throws IOException si une erreure se produit dans le flot.
 	 */
 	private byte readByte(final InputStream input) throws IOException {
@@ -283,8 +283,8 @@ public class PortableBitmap implements Cloneable {
 	/**
 	 * Lit des octets dans le flot.
 	 *
-	 * @param input le flot d'entr�e.
-	 * @param bytes le tableau d'octets � remplir.
+	 * @param input le flot d'entrée.
+	 * @param bytes le tableau d'octets à remplir.
 	 * @throws IOException si une erreure se produit dans le flot.
 	 */
 	private void readBytes(final InputStream input, final byte[] bytes) throws IOException {
@@ -298,9 +298,9 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * Lit une ligne de caract�res dans le flot.
+	 * Lit une ligne de caractères dans le flot.
 	 *
-	 * @param input le flot d'entr�e.
+	 * @param input le flot d'entrée.
 	 * @throws IOException si une erreure se produit dans le flot.
 	 */
 	private String readLine(final InputStream input) throws IOException {
@@ -313,7 +313,7 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * Change la valeur du bitmap pour la coordonn�e donn�e.
+	 * Change la valeur du bitmap pour la coordonnée donnée.
 	 *
 	 * @param u la colonne.
 	 * @param v la ligne.
@@ -344,7 +344,7 @@ public class PortableBitmap implements Cloneable {
 	}
 
 	/**
-	 * �crit le bitmap dans le flot.
+	 * écrit le bitmap dans le flot.
 	 *
 	 * @param output le flot de sortie.
 	 * @throws IOException si une erreure se produit dans le flot.

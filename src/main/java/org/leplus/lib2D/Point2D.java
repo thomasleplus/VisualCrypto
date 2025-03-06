@@ -44,7 +44,7 @@ public class Point2D {
 	/**
 	 * Retourne la somme de ce point et point.
 	 *
-	 * @return le r�sulat.
+	 * @return le résulat.
 	 */
 	public Point2D add(final Point2D point) {
 		return new Point2D(x + point.x, y + point.y);
@@ -106,18 +106,18 @@ public class Point2D {
 	}
 
 	/**
-	 * Retourne le point oppos� � ce point. (-x, -y)
+	 * Retourne le point opposé à ce point. (-x, -y)
 	 *
-	 * @return le point oppos�.
+	 * @return le point opposé.
 	 */
 	public Point2D neg() {
 		return new Point2D(-x, -y);
 	}
 
 	/**
-	 * Retourne la diff�rence de ce point et point.
+	 * Retourne la différence de ce point et point.
 	 *
-	 * @return le r�sulat.
+	 * @return le résulat.
 	 */
 	public Vector2D subtract(final Point2D point) {
 		return new Vector2D(x - point.x, y - point.y);
@@ -129,7 +129,7 @@ public class Point2D {
 	}
 
 	/**
-	 * Retourne le point apr�s la transformation donn�e.
+	 * Retourne le point après la transformation donnée.
 	 *
 	 * @param t la matrice de transformation
 	 * @return le nouveau point

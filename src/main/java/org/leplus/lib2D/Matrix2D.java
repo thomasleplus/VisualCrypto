@@ -16,7 +16,7 @@ public class Matrix2D {
 	public static final Matrix2D ZERO = new Matrix2D(0, 0);
 
 	/**
-	 * La matrice identiti�e.
+	 * La matrice identitiée.
 	 *
 	 * |1 0| |0 1|
 	 *
@@ -24,7 +24,7 @@ public class Matrix2D {
 	public static final Matrix2D ONE = new Matrix2D(1, 1);
 
 	/**
-	 * La matrice anti-identit�.
+	 * La matrice anti-identité.
 	 *
 	 * |-1 0| | 0 -1|
 	 *
@@ -32,7 +32,7 @@ public class Matrix2D {
 	public static final Matrix2D NEG = new Matrix2D(-1, -1);
 
 	/**
-	 * Retourne une matrice de rotation centr�e � l'origine (sens trigonom�trique).
+	 * Retourne une matrice de rotation centrée à l'origine (sens trigonométrique).
 	 *
 	 * @param t angle de rotation.
 	 * @return la matrice de transformation.
@@ -42,7 +42,7 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne une matrice de rotation (sens trigonom�trique).
+	 * Retourne une matrice de rotation (sens trigonométrique).
 	 *
 	 * @param c centre de rotation.
 	 * @param t angle de rotation.
@@ -53,9 +53,9 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne une matrice de changement d'�chelle.
+	 * Retourne une matrice de changement d'échelle.
 	 *
-	 * @param k changement d'�chelle.
+	 * @param k changement d'échelle.
 	 * @return la matrice de transformation.
 	 */
 	public static Matrix2D scaling(final double k) {
@@ -63,10 +63,10 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne une matrice de changement d'�chelle.
+	 * Retourne une matrice de changement d'échelle.
 	 *
-	 * @param x changement d'�chelle en x.
-	 * @param y changement d'�chelle en y.
+	 * @param x changement d'échelle en x.
+	 * @param y changement d'échelle en y.
 	 * @return la matrice de transformation.
 	 */
 	public static Matrix2D scaling(final double x, final double y) {
@@ -74,9 +74,9 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne une matrice de changement d'�chelle.
+	 * Retourne une matrice de changement d'échelle.
 	 *
-	 * @param vector le vecteur de changement d'�chelle.
+	 * @param vector le vecteur de changement d'échelle.
 	 * @return la matrice de transformation.
 	 */
 	public static Matrix2D scaling(final Vector2D vector) {
@@ -86,8 +86,8 @@ public class Matrix2D {
 	/**
 	 * Retourne une matrice de translation.
 	 *
-	 * @param x changement d'�chelle en x.
-	 * @param y changement d'�chelle en y.
+	 * @param x changement d'échelle en x.
+	 * @param y changement d'échelle en y.
 	 * @return la matrice de transformation.
 	 */
 	public static Matrix2D translation(final double x, final double y) {
@@ -97,7 +97,7 @@ public class Matrix2D {
 	/**
 	 * Retourne une matrice de translation.
 	 *
-	 * @param vector le vecteur de changement d'�chelle.
+	 * @param vector le vecteur de changement d'échelle.
 	 * @return la matrice de transformation.
 	 */
 	public static Matrix2D translation(final Vector2D vector) {
@@ -162,7 +162,7 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne la matrice de transformation correspondant � appliquer cette matrice
+	 * Retourne la matrice de transformation correspondant à appliquer cette matrice
 	 * puis matrix.
 	 *
 	 * @param matrix
@@ -236,7 +236,7 @@ public class Matrix2D {
 	/**
 	 * Retourne cette matrice * double.
 	 *
-	 * @return le r�sultat.
+	 * @return le résultat.
 	 */
 	protected Matrix2D multiply(final double d) {
 		return new Matrix2D(m[0] * d, m[1] * d, m[2] * d, m[3] * d, m[4] * d, m[5] * d, m[6] * d, m[7] * d, m[8] * d);
@@ -245,7 +245,7 @@ public class Matrix2D {
 	/**
 	 * Retourne cette matrice * matrix.
 	 *
-	 * @return le r�sultat.
+	 * @return le résultat.
 	 */
 	protected Matrix2D multiply(final Matrix2D matrix) {
 		return new Matrix2D(m[0] * matrix.m[0] + m[1] * matrix.m[3] + m[2] * matrix.m[6],
@@ -262,7 +262,7 @@ public class Matrix2D {
 	/**
 	 * Retourne cette matrice * point.
 	 *
-	 * @return le r�sultat.
+	 * @return le résultat.
 	 */
 	protected Point2D multiply(final Point2D point) {
 		return new Point2D((m[0] * point.x + m[1] * point.y + m[2]) / (m[6] * point.x + m[7] * point.y + m[8]),
@@ -272,7 +272,7 @@ public class Matrix2D {
 	/**
 	 * Retourne cette matrice * vector.
 	 *
-	 * @return le r�sultat.
+	 * @return le résultat.
 	 */
 	protected Vector2D multiply(final Vector2D vector) {
 		return new Vector2D((m[0] * vector.x + m[1] * vector.y + m[2]) / (m[6] * vector.x + m[7] * vector.y + m[8]),
@@ -280,8 +280,8 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne cette matrice compos�e avec une rotation centr�e � l'origine (sens
-	 * trigonom�trique).
+	 * Retourne cette matrice composée avec une rotation centrée à l'origine (sens
+	 * trigonométrique).
 	 *
 	 * @param t angle de rotation.
 	 * @return la matrice de transformation.
@@ -291,7 +291,7 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne cette matrice compos�e avec une rotation (sens trigonom�trique).
+	 * Retourne cette matrice composée avec une rotation (sens trigonométrique).
 	 *
 	 * @param c centre de rotation.
 	 * @param t angle de rotation.
@@ -302,9 +302,9 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne cette matrice compos�e avec un changement d'�chelle.
+	 * Retourne cette matrice composée avec un changement d'échelle.
 	 *
-	 * @param k changement d'�chelle.
+	 * @param k changement d'échelle.
 	 * @return la matrice de transformation.
 	 */
 	public Matrix2D scale(final double k) {
@@ -312,10 +312,10 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne cette matrice compos�e avec un changement d'�chelle.
+	 * Retourne cette matrice composée avec un changement d'échelle.
 	 *
-	 * @param x changement d'�chelle en x.
-	 * @param y changement d'�chelle en y.
+	 * @param x changement d'échelle en x.
+	 * @param y changement d'échelle en y.
 	 * @return la matrice de transformation.
 	 */
 	public Matrix2D scale(final double x, final double y) {
@@ -323,9 +323,9 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne cette matrice compos�e avec un changement d'�chelle.
+	 * Retourne cette matrice composée avec un changement d'échelle.
 	 *
-	 * @param vector le vecteur de changement d'�chelle.
+	 * @param vector le vecteur de changement d'échelle.
 	 * @return la matrice de transformation.
 	 */
 	public Matrix2D scale(final Vector2D vector) {
@@ -339,10 +339,10 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne cette matrice compos�e avec une translation.
+	 * Retourne cette matrice composée avec une translation.
 	 *
-	 * @param x changement d'�chelle en x.
-	 * @param y changement d'�chelle en y.
+	 * @param x changement d'échelle en x.
+	 * @param y changement d'échelle en y.
 	 * @return la matrice de transformation.
 	 */
 	public Matrix2D translate(final double x, final double y) {
@@ -350,9 +350,9 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne cette matrice compos�e avec une translation.
+	 * Retourne cette matrice composée avec une translation.
 	 *
-	 * @param vector le vecteur de changement d'�chelle.
+	 * @param vector le vecteur de changement d'échelle.
 	 * @return la matrice de transformation.
 	 */
 	public Matrix2D translate(final Vector2D vector) {
@@ -360,9 +360,9 @@ public class Matrix2D {
 	}
 
 	/**
-	 * Retourne la transpos�e de cette matrice.
+	 * Retourne la transposée de cette matrice.
 	 *
-	 * @return la transpos�e.
+	 * @return la transposée.
 	 */
 	public Matrix2D transpose() {
 		return new Matrix2D(m[0], m[3], m[6], m[1], m[4], m[7], m[2], m[5], m[8]);

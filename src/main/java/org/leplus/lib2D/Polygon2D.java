@@ -5,19 +5,19 @@ import java.util.Arrays;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * Polygone g�n�rique.
+ * Polygone générique.
  */
 public class Polygon2D {
 
 	/**
-	 * Un triangle �quilat�ral de c�t� 1. (0.0, 1.0/sqrt(3)) (-0.5, -0.5/sqrt(3))
+	 * Un triangle équilatéral de côté 1. (0.0, 1.0/sqrt(3)) (-0.5, -0.5/sqrt(3))
 	 * (0.5, -0.5/sqrt(3))
 	 */
 	public static final Polygon2D TRIANGLE = new Polygon2D(new Point2D(0, 0), new Point2D(0, 1 / StrictMath.sqrt(3)),
 			new Point2D(-0.5, -0.5 / StrictMath.sqrt(3)), new Point2D(0.5, -0.5 / StrictMath.sqrt(3)));
 
 	/**
-	 * Un carr� de c�t� 1. (0.5, 0.5) (-0.5, 0.5) (-0.5, -0.5) (0.5, -0.5)
+	 * Un carré de côté 1. (0.5, 0.5) (-0.5, 0.5) (-0.5, -0.5) (0.5, -0.5)
 	 */
 	public static final Polygon2D SQUARE = new Polygon2D(new Point2D(0, 0), new Point2D(0.5, 0.5),
 			new Point2D(-0.5, 0.5), new Point2D(-0.5, -0.5), new Point2D(0.5, -0.5));
@@ -28,9 +28,9 @@ public class Polygon2D {
 	private Point2D[] points;
 
 	/**
-	 * Construit un polygone r�gulier centr� en (0, 0) et de n sommets (au moins 3),
-	 * le premier sommet �tant toujours plac� en (0, 1) et les suivants dans le sens
-	 * trigonom�trique.
+	 * Construit un polygone régulier centré en (0, 0) et de n sommets (au moins 3),
+	 * le premier sommet étant toujours placé en (0, 1) et les suivants dans le sens
+	 * trigonométrique.
 	 *
 	 * @param n le nombre de sommets du polygone (au moins 3).
 	 */
@@ -49,7 +49,7 @@ public class Polygon2D {
 	}
 
 	/**
-	 * Construit un polygone avec les trois sommets donn�s.
+	 * Construit un polygone avec les trois sommets donnés.
 	 */
 	public Polygon2D(final Point2D center, final Point2D a, final Point2D b, final Point2D c) {
 		points = new Point2D[4];
@@ -60,7 +60,7 @@ public class Polygon2D {
 	}
 
 	/**
-	 * Construit un polygone avec les quatre sommets donn�s.
+	 * Construit un polygone avec les quatre sommets donnés.
 	 */
 	public Polygon2D(final Point2D center, final Point2D a, final Point2D b, final Point2D c, final Point2D d) {
 		points = new Point2D[5];
@@ -72,7 +72,7 @@ public class Polygon2D {
 	}
 
 	/**
-	 * Construit un polygone dont les sommets sont les points donn�s (le premier
+	 * Construit un polygone dont les sommets sont les points donnés (le premier
 	 * point est le centre et les points suivants sont les sommets successifs).
 	 *
 	 * @param t les points du polygone.
@@ -120,9 +120,9 @@ public class Polygon2D {
 	}
 
 	/**
-	 * Retourne le ni�me sommet du polygone.
+	 * Retourne le nième sommet du polygone.
 	 *
-	 * @return le ni�me sommet du polygone.
+	 * @return le nième sommet du polygone.
 	 */
 	public Point2D getTop(final int n) {
 		if (n < 0) {
@@ -137,11 +137,11 @@ public class Polygon2D {
     }
 
     /**
-	 * Applique la matrice de transformation donn�e au polygone et retourne le
-	 * r�sultat.
+	 * Applique la matrice de transformation donnée au polygone et retourne le
+	 * résultat.
 	 *
 	 * @param m la matrice de transformation.
-	 * @return le r�sultat.
+	 * @return le résultat.
 	 */
 	public Polygon2D transform(final Matrix2D m) {
 		final Polygon2D n = new Polygon2D(points);

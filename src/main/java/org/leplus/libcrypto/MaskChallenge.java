@@ -9,9 +9,9 @@ import java.io.InputStream;
 public final class MaskChallenge extends Mask {
 
 	/**
-	 * Construit le challenge de masque � partir des donn�es dans le fot.
+	 * Construit le challenge de masque à partir des données dans le fot.
 	 *
-	 * @param input le flot d'entr�e.
+	 * @param input le flot d'entrée.
 	 * @throws IOException si une erreure se produit dans le flot.
 	 */
 	public MaskChallenge(final InputStream input) throws IOException {
@@ -19,7 +19,7 @@ public final class MaskChallenge extends Mask {
 	}
 
 	/**
-	 * Construit le challenge � partir du masque.
+	 * Construit le challenge à partir du masque.
 	 *
 	 * @param m le masque.
 	 */

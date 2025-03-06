@@ -23,9 +23,9 @@ public class Mask {
     private final PortableBitmap bmp;
 
     /**
-     * Construit le masque � partir des donn�es dans le fot.
+     * Construit le masque à partir des données dans le fot.
      *
-     * @param input le flot d'entr�e.
+     * @param input le flot d'entrée.
      * @throws IOException si une erreure se produit dans le flot.
      */
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
@@ -37,7 +37,7 @@ public class Mask {
     }
 
     /**
-     * Construit le masque � partir du masque.
+     * Construit le masque à partir du masque.
      *
      * @param mask le masque
      */
@@ -46,7 +46,7 @@ public class Mask {
     }
 
     /**
-     * Construit le masque � partir du bitmap.
+     * Construit le masque à partir du bitmap.
      *
      * @param pbm le bitmap
      */
@@ -102,7 +102,7 @@ public class Mask {
     }
 
     /**
-     * Retourne la valeur du masque pour la coordonn�e donn�e.
+     * Retourne la valeur du masque pour la coordonnée donnée.
      *
      * @param u la ligne.
      * @param v la colonne.
@@ -126,9 +126,9 @@ public class Mask {
     }
 
     /**
-     * Retourne la n�gation du masque.
+     * Retourne la négation du masque.
      *
-     * @return la n�gation
+     * @return la négation
      */
     public Mask not() {
         final Mask not = new Mask(bmp);
@@ -234,7 +234,7 @@ public class Mask {
     }
 
     /**
-     * Met � z�ro les bits inutilis�s du masque.
+     * Met à zéro les bits inutilisés du masque.
      */
     private void trim() {
         final int w = (int) StrictMath.ceil((double) getWidth() / 8);
@@ -251,7 +251,7 @@ public class Mask {
     }
 
     /**
-     * �crit le masque dans le flot.
+     * écrit le masque dans le flot.
      *
      * @param output le flot de sortie.
      * @throws IOException si une erreure se produit dans le flot.

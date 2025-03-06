@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Cl� de Masque Cryptographique.
+ * Clé de Masque Cryptographique.
  */
 public final class MaskKey extends Mask {
 
 	/**
-	 * Construit la cl� � partir des donn�es dans le fot.
+	 * Construit la clé à partir des données dans le fot.
 	 *
-	 * @param input le flot d'entr�e.
+	 * @param input le flot d'entrée.
 	 * @throws IOException si une erreure se produit dans le flot.
 	 */
 	public MaskKey(final InputStream input) throws IOException {
@@ -19,7 +19,7 @@ public final class MaskKey extends Mask {
 	}
 
 	/**
-	 * Construit la cl� � partir du masque.
+	 * Construit la clé à partir du masque.
 	 *
 	 * @param m le masque.
 	 */
