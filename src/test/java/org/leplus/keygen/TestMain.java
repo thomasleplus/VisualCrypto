@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class TestMain {
 
     @Test
-    void test() throws IOException {
+    public void test() throws IOException {
         Main.main(new String[] { "test" });
     }
 
