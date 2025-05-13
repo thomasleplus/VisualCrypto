@@ -1,0 +1,445 @@
+% $Id: rapport.tex,v 1.3 2003/01/29 08:17:19 leplusth Exp $
+
+\documentclass[letterpaper,12pt,twoside]{article}
+
+\usepackage[french]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphics}
+
+\bibliographystyle{plain}
+
+\newcommand{\DS}{Douglas~\textsc{Simmons}}
+
+\author{Thomas~\textsc{Leplus}}
+
+\title{\large{IFT6350 -- Projet} \\ Cryptographie Visuelle}
+
+\begin{document}
+
+\maketitle{}
+
+\section{Introduction}
+
+Les cryptologues ont montré depuis longtemps qu'il existe un système
+cryptographique parfait dénommé le masque jetable. Le principe est que
+deux interlocuteurs, disons Alice et Bob, veulent échanger
+confidentiellement un message $m$ long de $n$ bits. Pour cela, ils doivent
+partager au préalable une clé aléatoire $k$ longue aussi de $n$
+bits. Par la suite, Alice fait un OU exclusif bit à bit entre $m$ et
+$k$, puis elle envoie le résultat $c$ (le cryptogramme) à
+Bob. Celui-ci n'a plus qu'à refaire un OU Exclusif entre $c$ et $k$
+pour retrouver $m$.
+
+La théorie de l'information de Claude~\textsc{Shannon} permet de
+prouver qu'un tel système est parfaitement incassable tant que la clé
+est bien aléatoire et que l'on ne réutilise jamais une clé plusieurs
+fois (d'où le nom de masque jetable).
+
+Dans la pratique, ce système est presque inutilisable car Alice et Bob
+doivent partager autant de bits aléatoires qu'ils ne souhaitent en
+transmettre. Si Alice et Bob ont les moyens de se mettre secrètement
+d'accord sur $n$ bits aléatoires, ils auraient probablement aussi bien
+pu transmettre directement le message par la même méthode\footnote{En
+fait, une implantation effective du masque jetable était le
+téléphone rouge entre la Maison Blanche et le Kremlin~: les deux camps
+échangeaient par avance des grandes quantités de bits aléatoires grâce
+à la valise diplomatique et ils consommaient ensuite progressivement
+ces bits pour chiffrer leurs communications par masque jetable.}.
+
+Lors de la conférence \textsc{EUROCRYPT'94}, Moni~\textsc{Naor} et
+Adi~\textsc{Shamir} \cite{e94-Naor-Shamir} ont introduit l'idée de
+cryptographie visuelle. La question est de savoir si l'on peut
+réaliser de la cryptographie avec des masques graphiques à la place
+des masques binaires comme le masque jetable.
+
+\section{Théorie}
+
+\begin{figure}[p]
+\begin{center}
+\begin{tabular}{|c c || c|}
+\hline
+X & Y & X sur Y \\
+\includegraphics{0} & \includegraphics{0} & \includegraphics{0} \\
+\includegraphics{0} & \includegraphics{1} & \includegraphics{1} \\
+\includegraphics{1} & \includegraphics{0} & \includegraphics{1} \\
+\includegraphics{1} & \includegraphics{1} & \includegraphics{1} \\
+\hline
+\end{tabular}
+\caption{Table de vérité pour le transparent et l'opaque.}
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+\begin{center}
+\begin{tabular}{|c c || c|}
+\hline
+X & Y & X sur Y \\
+\includegraphics{l} & \includegraphics{l} & \includegraphics{l} \\
+\includegraphics{l} & \includegraphics{r} & \includegraphics{1} \\
+\includegraphics{r} & \includegraphics{l} & \includegraphics{1} \\
+\includegraphics{r} & \includegraphics{r} & \includegraphics{r} \\
+\hline
+\end{tabular}
+\caption{Table de vérité pour les masques diagonaux.}
+\end{center}
+\end{figure}
+
+Transposons les bits en termes de masquer ou non la lumière~:
+pour 0, on laisse passer la lumière (le transparent) et pour 1, on
+bloque la lumière (l'opaque). La base du problème est qu'un tel
+masque graphique ne permet pas de réaliser de OU exclusifs. En effet,
+si l'on fait la table de vérité pour ce genre masque
+(figure 1), on obtient plutôt un OU inclusif.
+
+Une solution proposée par \textsc{Naor} et \textsc{Shamir} est
+d'utiliser des masques diagonaux. En effet, on voit sur la figure 2 que
+si l'on superpose deux diagonales identiques, on obtient cette
+même diagonale (50\% d'opacité) alors que si l'on superpose deux
+diagonales perpendiculaires, les diagonales se complètent pour donner un
+carré opaque (100\% d'opacité). Partant de ce constat, le principe du
+chiffrement d'une image en noir et blanc est le suivant~:
+\begin{enumerate}
+\item Alice et Bob partagent un masque secret de même dimension que
+  l'image à échanger et constitué aléatoirement de diagonales telles
+  que celles de la figure 2.
+\item Alice prend l'image qu'elle veut envoyer à Bob, la compare pixel
+  par pixel au masque aléatoire et la transforme selon les règles suivantes~:
+  \begin{enumerate}
+  \item Si le pixel de l'image est blanc, le diagonale de l'image
+    masquée est la perpendiculaire à celle du masque.
+  \item Si le pixel de l'image est noir, le diagonale de l'image
+    masquée est la même que celle du masque.
+  \end{enumerate}
+\item Alice transmet l'image masquée à Bob.
+\item Bob superpose l'image masquée et le masque sur un fond
+  blanc. Le résultat obtenu aura des carrés (100\% d'opacité) là où
+  l'image était noire et de diagonales (50\% d'opacité) là où l'image
+  était blanche.
+\end{enumerate}
+
+Le bon fonctionnement de l'algorithme est basé sur le fait que le
+cerveau humain est capable naturellement de reconnaître une image en
+noir et blanc à partir d'une image en noir (100\% d'opacité) et disons
+gris (50\% d'opacité). La différence de contraste est au moins assez
+suffisante pour que l'on puisse reconnaître des formes simples. Un bon
+exemple est proposé sur le site de \DS{} (voir les références) avec le
+drapeau canadien (figure 3~: la première image est l'original, la
+seconde est le masque, la troisième est l'image masquée et enfin la
+quatrième image est le résultat de la superposition de l'image masquée
+et du masque).
+
+\begin{figure}[p]
+\begin{center}
+\includegraphics{flag}
+\includegraphics{flag1}
+\includegraphics{flag2}
+\includegraphics{flag12}
+\caption{Drapeau canadien (par \DS{}).}
+\end{center}
+\end{figure}
+
+\section{Identification}
+
+L'idée du projet est d'utiliser la cryptographie visuelle pour faire
+un système d'identification visuelle. Le principe est que
+l'utilisateur reçoit un masque. Par la suite, pour identifier
+l'utilisateur, il suffit de lui soumettre une image masquée en
+correspondance~: si l'utilisateur est vraiment le propriétaire du
+masque, il peut reconnaître l'image derrière le masque en superposant
+l'image masquée et le masque alors qu'un usurpateur n'a pas la moindre
+idée du contenu de l'image originale.
+
+\section{Conception du système}
+
+\subsection{Les drapeaux}
+
+La première version du projet était inspirée de l'exemple du drapeau
+canadien utilisé par \DS{} (figure 3). L'idée était la suivante~:
+chaque utilisateur est attribué un identifiant et un masque (imprimé
+sur un support acétate pour le prototype). Le logiciel garde une liste
+des pairs (identifiant, masque).
+
+Ensuite, lorsque un utilisateur veut s'identifier, le logiciel
+commence par demander à l'utilisateur son identifiant. Avec cet
+identifiant, le système peut retrouver dans sa liste le masque de
+l'utilisateur. Le système choisit également aléatoirement $n$ drapeaux
+dans une librairie de représentations de drapeaux à sa disposition.
+Un des $n$ drapeau (choisit aléatoirement) est affiché masqué et les
+$n$ drapeau sont affichés normalement. L'utilisateur légitime doit être
+capable de dire quel drapeau parmi les $n$ proposés est celui
+représenté par le masque. La probabilité qu'un imposteur devine le bon
+drapeau par hasard est de $\frac{1}{n}$. Ce principe d'identification
+est traditionnellement appellé un \textit{challenge} d'identification.
+
+\subsection{Génération d'images aléatoires}
+
+Le problème de la méthode ci-dessus est que le nombre de drapeau est bien
+trop limité\footnote{il y a environ 230 drapeaux
+nationaux. De plus, certains drapeaux sont identiques en noir et
+blanc.} (un ordinateur peut tester toutes combinaisons de masque et
+drapeaux dans un temps raisonnable).
+
+La solution à la limitation du nombre de drapeaux est de remplacer les
+drapeaux par des images générées aléatoirement. Cependant, il ne faut
+pas non plus que les images soient trop aléatoires (comme par exemple
+du bruit) pour que l'utilisateur n'ai pas trop de mal à les
+reconnaître.
+
+Il faut que l'image comporte des formes relativement distinguables
+mais disposées de façon aléatoires (pour concerver le grand nombre
+de \textit{challenges} possibles). Une solution pourrait être de
+générer les images en choisisant une figure géométrique (triangle,
+carré, pentagone...) et en lui appliquant une rotation aléatoire sur
+elle-même pour augmenter le nombre de résultats possibles.
+
+Il est intéressant dans ce cas qu'il est souhaitable de favoriser les
+figures géométriques asymétriques pour que la rotation change le plus
+possible le résultat final.
+
+\subsection{Attaque par répétition}
+
+Après avoir implanté la génération d'images
+aléatoires, il s'est avéré que le système souffre d'une faille de
+sécurité majeure. Par propriété du OU exclusif, il s'avère que
+si un attaquant applique l'image masquée sur chacune des images
+claires porposées comme solution, dans un cas il obtient le masque et
+dans les autres cas il obtient un résultat non pertinant. L'attaquant ne
+peut pas directement distinguer le masque des résultats non pertinants
+mais s'il fait cette manipulation sur plusieurs \textit{challenges}, le masque
+sera le résultat qui apparaitra à chaque fois.
+
+La réponse à cette attaque consiste à ne plus masquer une image et
+demander à l'utilisateur de la reconnaître mais plutôt de mettre $n-1$
+figures géométriques parmi $n$ dans l'image masquée et demander à
+l'utilisateur quelle est la figure manquante.
+
+\subsection{Attaque statistique}
+
+Une autre attaque est toujours possible sur le système, bien que plus
+difficile. En effet, il est probable que le procédé de génération
+de nombre aléatoire a tendance à générer des images avec toujours une
+plus forte proportion de pixels blancs ou noirs.
+
+Pour éviter qu'un attaquant puisse profiter de cette propriété du
+générateur d'images aléatoires, on utilise un dernier bit
+aléatoire à la fin de la génération de l'image pour décider si l'on
+fait ou non une négation de l'image générée. En effet, la négation
+de l'image tranforme des figures noires sur fond blanc en figures
+blanches sur fond noir, ce qui permet d'alterner la tendance
+statistique des images générées, rendant ainsi plus difficile
+l'exploitation de cette tendance par un attaquant.
+
+\section{Implantation}
+
+Le système de \textit{login} illustrant la méthode présentée
+précédemment a été réalisée entièrement en Java. Le système se
+décompose en plusieurs librairies et deux apllications dont les
+principaux détails sont détaillés ci-dessous.
+
+\subsection{Librairie graphique}
+
+La librairie graphique est destinée à la gestion des images dans le
+projet. Elle se compose essentiellement de la classe
+\textsf{PortableBitmap} qui implimante les images en noir et blanc au
+format \textit{Portable Bitmap} tel que décrit dans la page de manuel
+Unix (\textsf{man pbm}).
+
+Cette classe offre également une méthode pour tracer des droites dans
+l'image avec l'algorithme de \textsc{Bresenham} et une méthode pour
+remplir une zone avec l'algorithme à germe \textit{Flood Fill}.
+
+Le code source de l'algorithme \textsc{Bresenham} est tiré de
+l'implémentation de Kenny~\textsc{Hoff} disponible à l'adresse~:
+\begin{verbatim}
+http://wwwx.cs.unc.edu/~hoff/projects/comp235/bresline/src/bresline.c
+\end{verbatim}
+
+Le code source de l'algorithme \textit{Flood Fill}
+est directement inspiré du pseudo-code proposé en cours.
+
+\subsection{Librairie 2D}
+
+La librairie 2D contient les éléments de géométrie 2D nécessaire au
+projet~: les points, les vecteurs, les matrices de transformation. La
+librairie 2D propose aussi une classe \textit{Polgon2D} pour générer
+rapidement des polygônes réguliers (triangle équilatéral,
+carré...). Une transformation de mise à l'échelle permet de faire un
+rectangle d'un carré. Pour faire des cercles, on se contente de
+polygônes réguliers avec beaucoup de côtés.
+
+La programmation de ces classes est largement inspirée du code source
+fourni avec les TP d'infographie. Le principal ajout est que les
+polygônes savent se déssiner sur une image de la librairie grpahique.
+De plus, il s'est avéré utile d'ajouter un centre aux polygônes afin
+de pouvoir facilement placer le germe de l'algorithme \textit{Flood Fill}
+si l'on veut remplir un polygône.
+
+\subsection{Librairie cryptographique}
+
+La librairie cryptographique contient essentiellement un générateur de
+masques aléatoires et un générateur d'image aléatoires correspondant
+aux spécifications décrites précédemment.
+
+De plus, la librairie cryptographique permet de faire des opération
+logiques sur les masques (NON, ET, OU inclusif, OU exclusif...).
+
+\subsection{Générateur de clés}
+
+Le générateur de clés est une application en ligne de commandes
+destinée à l'administateur du système. Elle permet de générer un
+masque d'identification pour un utilisateur.
+
+L'utilisation du programme est très simple. La commande est la suivante~:
+\begin{verbatim}
+# java -jar KeyGen.jar id
+\end{verbatim}
+Le programme crée alors dans le répertoire courant
+deux fichiers~: '\textsf{id.key}' dont le format est destiné à
+être lu par l'application principale et une image '\textsf{id.pbm}' qui
+est destinée à être imprimée sur un support transparent et donnée à
+l'utilisateur.
+
+\subsection{Application principale}
+
+L'application principale est celle qui permet à un utilisateur du
+système de s'identifier en utilisant le masque imprimé qui lui a été fourni.
+
+L'application est lancée avec la commande suivante~:
+\begin{verbatim}
+# java -jar MaskLogin.jar
+\end{verbatim}
+
+Ensuite, la fenêtre de l'application (figure 4 à la fin du rapport)
+apparait et l'utilisateur saisit son identifiant dans le champs prévu
+à cet effet. L'application cherche alors dans son répertoire courant
+d'exécution le fichier '\textsf{id.key}' correspondant et génère un
+\textit{challenge} en conséquence (figure 5). L'utilisateur plaque son
+masque (figure 6) sur l'écran et il observe alors le
+\textit{challenge} en clair (figure 7), ce qui lui permet de choisir
+parmi les figures porposée celle qui est absente du \textit{challenge}
+(figure 8).
+
+\section{Améliorations}
+
+\subsection{Comparaison avec les mots de passe}
+
+Le système développé dans ce projet à plusieurs avantage par rapport à
+un simple système par mot de passe. Tout d'abord, il y a bien plus de
+masques possibles ($2^{3750}$ pour la taille de masque utilisée dans
+l'application) que de mot de passe possibles (environ $2^{120}$ mot de
+passe de moins de 20 caractères et sensibles à la casse).
+
+Par contre, il est important de noter qu'un seul \textit{challenge} ne suffit
+pas car dans l'application, un attaquant à 1 chance sur 7 de trouver
+la bonne réponse par hasard. La probabilité de succès d'un attaquant à
+$n$ \textit{challenges} étant $\frac{1}{7^n}$, au moins 3 \textit{challenges} sont
+nécessaire pour un minimum de sécurité (seulement 1 chance sur 343 de
+réussir par hasard).
+
+Enfin, un avantage des mots de passe est que, à mois d'une négligeance
+de l'utilisateur, on ne peut pas perdre ou se faire voler son mot de
+passe, contrairement à un objet physique tel que le masque.
+
+\subsection{Comparaison avec les cartes à puce}
+
+La carte à puce est un système d'identification particulièrement
+efficace. Toutefois, la fabrication de cartes à puces est coûteuse
+alors que l'impression de masque ne l'est pas. Les masques peuvent
+donc être utilisés par des petites entreprises cherchant un moyen
+d'identification légèrement supérieurs aux mots de passe mais tout de
+même bon marché.
+
+En toute honnêteté, il faut rappeller que la sécurité de la méthode de
+cryptographie visuelle est basée sur celle du masque jetable. Pour
+concerver la sécurité théoriquement parfaite du système, il faudrait
+donc utiliser une seule fois chaque masque. Disons qu'un bon compromis
+dans la pratique serait de changer souvent les masques des
+utilisateurs, ce qui peut rendre le procédé un peu plus coûteux.
+
+\subsection{Limitations technologiques}
+
+Une amélioration évidante par rapport au prototype serait d'imprimer
+un masque plus précis. Cela demande une imprimante laser plus précise
+mais cela n'a rien d'impossible. La taille des pixels des écrans est
+également un facteur limitant mais de toutes façon l'oeil humain ne
+permet pas d'utiliser confortablement des masques beaucoup plus petits.
+
+Dans la pratique, un problème inattendu dans la réalistation du
+prototype a été la calibration de la taille des carrés imprimés sur le
+masque pour qu'ils correspondent avec les pixels de l'écran utilisé
+pour la démonstration. En effet, la taille des pixels varie
+sensiblement d'un écran à un autre, d'une station de travail à un
+ordianteur portable et même parfois d'un endroit à l'autre du même écran~!
+
+\section{Conclusion}
+
+La cryptographie visuelle est un domaine en pleine émergeance et dont
+les applications restent encore à explorer. En effet, la cryptographie
+moderne repose sur des fonctions mathématiques que les ordinateurs
+savent calculer rapidement mais qu'ils ne savent pas inverser (par
+exemple, la multiplication de nombres premiers est rapide alors que la
+factorisation d'un nombre en nombres premiers est très difficile).
+
+L'idée de la cryptographie visuelle est d'exploiter le fait que la
+reconnaissance d'image est difficile pour un ordinateur alors que le
+cerveau humain le fait tellement rapidement que l'on en est à peine
+conscient. Peut-être serait-il intéressant de réfléchir à d'autres
+domaines que l'infogprahie où les qualités du cerveau humain
+pourraient permettre d'améliorer un alogirthme~? Il s'agirait en
+quelque sorte d'algorithmes interactifs où l'humain et l'ordinateur se
+relaient pour réaliser une tâche.
+
+\section{Références}
+
+La base théorie derrière la cryptographie visuelle est clairement
+expliquée sur le site de \DS{}~:
+\begin{verbatim}
+http://www.cacr.math.uwaterloo.ca/~dstinson/visual.html
+\end{verbatim}
+
+La documentation de Java s'est également avérée très utile~:
+\begin{verbatim}
+http://java.sun.com/j2se/1.4.1/docs/api/
+\end{verbatim}
+
+Les articles utilisés pour ce projet sont listés sur la page de
+bibliographie suivante.
+
+\bibliography{rapport}
+
+\section{Saisies d'écran}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics{MaskLogin1}
+\caption{Application principale.}
+\end{center}
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics{MaskLogin2}
+\caption{Un \textit{challenge}.}
+\end{center}
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics{MaskLogin3}
+\caption{Le masque.}
+\end{center}
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics{MaskLogin4}
+\caption{La superposition du masque sur le \textit{challenge}.}
+\end{center}
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics{MaskLogin5}
+\caption{La validation.}
+\end{center}
+\end{figure}
+
+\end{document}
