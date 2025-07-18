@@ -17,7 +17,7 @@ contains more explanations and references are found in the
 [project paper](docs/rapport.pdf) (in French).
 
 The main idea of the project is based on the results shown by Douglas
-Stinson on his page dedicated to the visual cryptography: http://cacr.uwaterloo.ca/~dstinson/visual.html
+Stinson on his page dedicated to the visual cryptography: https://cacr.uwaterloo.ca/~dstinson/visual.html
 
 For more information on this project, as well as the original paper in PDF, please see (in French):
 
