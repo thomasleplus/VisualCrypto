@@ -1,3 +1,6 @@
 {
-  "ignore": ["src/main/java/org/leplus/lib2D/Point2D.java", "src/main/java/org/leplus/lib2D/Vector2D.java"]
+  "ignore": [
+    "src/main/java/org/leplus/lib2D/Point2D.java",
+    "src/main/java/org/leplus/lib2D/Vector2D.java"
+  ]
 }
