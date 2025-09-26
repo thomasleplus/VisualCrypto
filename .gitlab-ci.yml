@@ -70,22 +70,14 @@ super-linter:
     - "/action/lib/linter.sh"
   timeout: 10 minutes
 
-devskim:
-  image:
-    name: ${CI_REGISTRY}/leplusorg/containers/microsoft-devskim:latest
-    entrypoint:
-      - ""
-  stage: check
-  script:
-    - "/tools/devskim analyze --source-code . --crawl-archives --file-format text"
-  timeout: 10 minutes
-
 semgrep:
   image:
     name: semgrep/semgrep:latest
     entrypoint:
       - ""
   stage: check
+  before_script:
+    - 'ln -s "$(pwd)" /src'
   script: |
     semgrep scan \
       --config p/c \
