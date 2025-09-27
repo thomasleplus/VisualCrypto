@@ -182,3 +182,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# SARIF files
+*.sarif
