@@ -1,7 +1,6 @@
 # VisualCrypto
 
 [![Maven](https://github.com/thomasleplus/VisualCrypto/workflows/Maven/badge.svg)](https://github.com/thomasleplus/VisualCrypto/actions?query=workflow:"Maven")
-[![CodeQL](https://github.com/thomasleplus/VisualCrypto/workflows/CodeQL/badge.svg)](https://github.com/thomasleplus/VisualCrypto/actions?query=workflow:"CodeQL")
 
 > [!WARNING]
 > THIS CODE IS EXPERIMENTAL AND WAS WRITTEN AS PART OF A RESEARCH PROJECT FROM 2003. IT HAS NOT BEEN MAINTAINED OR TESTED SINCE SO THIS CODE IS PROVIDED WITHOUT ANY WARRANTY OF ANY SORT.
