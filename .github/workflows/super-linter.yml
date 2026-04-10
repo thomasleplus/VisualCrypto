@@ -69,6 +69,8 @@ jobs:
           VALIDATE_SPELL_CODESPELL: false
           VALIDATE_LATEX: false
           LINTER_RULES_PATH: .
+          SAVE_SUPER_LINTER_SUMMARY: true
+          ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
           DEFAULT_BRANCH: main
           FILTER_REGEX_EXCLUDE: "(gradlew|gradlew\\.bat|gradle/.*|mvnw|mvnw\\.cmd|\\.m2/.*|\\.mvn/.*)$"
           JAVA_FILE_NAME: google_checks.xml
