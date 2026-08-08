@@ -1,5 +1,7 @@
 {
   "ignore": [
+    ".gitlab-ci.yml",
+    ".m2/**",
     "src/main/java/org/leplus/lib2D/Point2D.java",
     "src/main/java/org/leplus/lib2D/Vector2D.java"
   ]
