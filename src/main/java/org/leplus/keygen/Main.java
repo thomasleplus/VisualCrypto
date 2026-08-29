@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.leplus.libcrypto.Mask;
 import org.leplus.libcrypto.MaskKeyGenerator;
 
+/** Genere des cles de masques de cryptographie visuelle (fichiers .key et .pbm). */
 @SuppressFBWarnings("PATH_TRAVERSAL_OUT")
 public final class Main {
 
