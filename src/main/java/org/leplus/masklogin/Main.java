@@ -24,9 +24,8 @@ import org.leplus.libcrypto.MaskChallengeOracle;
 import org.leplus.libcrypto.MaskKey;
 
 /**
- * Demonstration de connexion par cryptographie visuelle : l'utilisateur saisit
- * un identifiant, superpose son masque au defi affiche et indique la forme
- * manquante pour s'authentifier.
+ * Demonstration de connexion par cryptographie visuelle : l'utilisateur saisit un identifiant,
+ * superpose son masque au defi affiche et indique la forme manquante pour s'authentifier.
  */
 @SuppressFBWarnings("PATH_TRAVERSAL_IN")
 public final class Main {
