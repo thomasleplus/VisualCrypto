@@ -3,6 +3,8 @@
     ".gitlab-ci.yml",
     ".m2/**",
     "src/main/java/org/leplus/lib2D/Point2D.java",
-    "src/main/java/org/leplus/lib2D/Vector2D.java"
+    "src/main/java/org/leplus/lib2D/Vector2D.java",
+    ".github/workflows/osv-scanner-pr.yml",
+    ".github/workflows/osv-scanner.yml"
   ]
 }
